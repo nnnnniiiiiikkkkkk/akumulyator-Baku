@@ -17,85 +17,101 @@
             background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
-            flex: 1;
+            padding: 0 15px;
         }
         
         /* Шапка */
         header {
             background: linear-gradient(135deg, #2c3e50, #3498db);
             color: white;
-            padding: 2rem 0;
+            padding: 1.5rem 0;
             text-align: center;
         }
         
         /* Навигация */
         nav {
             background: #34495e;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
-        nav ul {
+        .nav-container {
             display: flex;
-            justify-content: center;
-            list-style: none;
-            padding: 15px 0;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
         }
         
-        nav ul li a {
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li a {
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
-            margin: 0 5px;
+            padding: 10px 15px;
+            display: block;
+            transition: all 0.3s;
             border-radius: 5px;
-            transition: all 0.3s ease;
         }
         
-        nav ul li a:hover {
+        .nav-menu li a:hover, 
+        .nav-menu li a.active {
             background: #3498db;
-        }
-        
-        nav ul li a.active {
-            background: #3498db;
-            font-weight: bold;
         }
         
         /* Основной контент */
-        .page-content {
+        .page {
             display: none;
+            padding: 20px 0;
+            min-height: 60vh;
         }
         
-        .page-content.active {
+        .page.active {
             display: block;
         }
         
         /* Главная страница */
         .hero {
             text-align: center;
-            padding: 50px 0;
+            padding: 30px 0;
+        }
+        
+        .hero h2 {
+            margin-bottom: 15px;
+            font-size: 1.8rem;
         }
         
         /* Каталог */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
-            padding: 30px 0;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
         }
         
         .product-card {
             background: white;
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
         }
         
         .product-card:hover {
@@ -104,30 +120,30 @@
         
         .product-image {
             width: 100%;
-            height: 200px;
+            height: 180px;
             object-fit: contain;
             background: #f9f9f9;
-            padding: 20px;
+            padding: 15px;
         }
         
         .product-info {
-            padding: 20px;
+            padding: 15px;
         }
         
         .product-title {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-bottom: 10px;
             color: #2c3e50;
         }
         
         .product-specs {
             color: #7f8c8d;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             font-size: 0.9rem;
         }
         
         .product-price {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #e74c3c;
             font-weight: bold;
         }
@@ -135,19 +151,48 @@
         /* Кнопки */
         .btn {
             display: inline-block;
-            padding: 10px 20px;
+            padding: 8px 16px;
             background: #3498db;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             text-decoration: none;
-            margin-top: 15px;
+            margin-top: 10px;
             transition: background 0.3s;
+            font-size: 0.9rem;
         }
         
         .btn:hover {
             background: #2980b9;
+        }
+        
+        /* Подбор по авто */
+        .car-selection {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group select, 
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
         
         /* Подвал */
@@ -155,8 +200,44 @@
             background: #2c3e50;
             color: white;
             text-align: center;
-            padding: 2rem 0;
+            padding: 1.5rem 0;
             margin-top: 30px;
+        }
+        
+        /* Адаптация для мобильных */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                padding: 10px 15px;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                top: 60px;
+                left: -100%;
+                width: 80%;
+                height: calc(100vh - 60px);
+                background: #2c3e50;
+                flex-direction: column;
+                transition: all 0.3s;
+                padding: 20px 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-menu li {
+                margin: 5px 0;
+            }
+            
+            .nav-menu li a {
+                padding: 12px 20px;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -169,18 +250,21 @@
     </header>
     
     <nav>
-        <ul>
-            <li><a href="#" class="nav-link active" data-page="home">Əsas Səhifə</a></li>
-            <li><a href="#" class="nav-link" data-page="catalog">Kataloq</a></li>
-            <li><a href="#" class="nav-link" data-page="selection">Avtomobilə görə seçim</a></li>
-            <li><a href="#" class="nav-link" data-page="delivery">Çatdırılma</a></li>
-            <li><a href="#" class="nav-link" data-page="contact">Əlaqə</a></li>
-        </ul>
+        <div class="container nav-container">
+            <button class="menu-toggle">☰</button>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="home">Əsas Səhifə</a></li>
+                <li><a href="#" class="nav-link" data-page="catalog">Kataloq</a></li>
+                <li><a href="#" class="nav-link" data-page="selection">Avtomobilə görə seçim</a></li>
+                <li><a href="#" class="nav-link" data-page="delivery">Çatdırılma</a></li>
+                <li><a href="#" class="nav-link" data-page="contact">Əlaqə</a></li>
+            </ul>
+        </div>
     </nav>
     
     <div class="container">
         <!-- Главная страница -->
-        <div id="home" class="page-content active">
+        <div id="home" class="page active">
             <section class="hero">
                 <h2>Xoş gəlmisiniz!</h2>
                 <p>Geniş çeşid və sərfəli qiymətlər</p>
@@ -189,44 +273,62 @@
         </div>
         
         <!-- Каталог -->
-        <div id="catalog" class="page-content">
+        <div id="catalog" class="page">
             <h2>Akkumulyator Kataloqu</h2>
-            <p>Bütün modellər və texniki xüsusiyyətlər</p>
-            
             <div class="product-grid">
                 <!-- Товары будут добавляться через JavaScript -->
             </div>
         </div>
         
         <!-- Подбор по авто -->
-        <div id="selection" class="page-content">
+        <div id="selection" class="page">
             <h2>Avtomobilə görə seçim</h2>
-            <form id="car-selection">
-                <div>
-                    <label for="car-brand">Marka:</label>
+            <div class="car-selection">
+                <div class="form-group">
+                    <label for="car-brand">Avtomobil markası:</label>
                     <select id="car-brand">
                         <option value="">Seçin</option>
                         <option value="bmw">BMW</option>
                         <option value="mercedes">Mercedes</option>
                         <option value="audi">Audi</option>
+                        <option value="toyota">Toyota</option>
                     </select>
                 </div>
-                <button type="button" class="btn find-battery">Akkumulyator tap</button>
-            </form>
+                <div class="form-group">
+                    <label for="car-model">Model:</label>
+                    <select id="car-model" disabled>
+                        <option value="">Əvvəlcə marka seçin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="car-year">Buraxılış ili:</label>
+                    <select id="car-year" disabled>
+                        <option value="">Əvvəlcə model seçin</option>
+                    </select>
+                </div>
+                <button class="btn find-battery">Akkumulyator tap</button>
+            </div>
         </div>
         
         <!-- Доставка -->
-        <div id="delivery" class="page-content">
+        <div id="delivery" class="page">
             <h2>Çatdırılma şərtləri</h2>
-            <p>Bakı şəhəri daxilində pulsuz çatdırılma</p>
-            <p>Regionlara çatdırılma 2-3 iş günü ərzində</p>
+            <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                <p><strong>Bakı şəhəri daxilində:</strong> Pulsuz çatdırılma (24 saat ərzində)</p>
+                <p><strong>Regionlara çatdırılma:</strong> 2-3 iş günü ərzində (qiymət müraciət zamanı bildirilir)</p>
+                <p><strong>Ödəniş:</strong> Nağd və ya kartla (çatdırılma zamanı)</p>
+            </div>
         </div>
         
         <!-- Контакты -->
-        <div id="contact" class="page-content">
+        <div id="contact" class="page">
             <h2>Əlaqə</h2>
-            <p>Telefon: +994 12 345 67 89</p>
-            <p>Ünvan: Bakı şəhəri, Nəsimi rayonu</p>
+            <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
+                <p><strong>Ünvan:</strong> Bakı şəhəri, Nəsimi rayonu, Füzuli küçəsi 23</p>
+                <p><strong>Telefon:</strong> +994 12 345 67 89</p>
+                <p><strong>İş saatları:</strong> Hər gün 09:00 - 20:00</p>
+                <p><strong>Email:</strong> info@akkumulator.az</p>
+            </div>
         </div>
     </div>
     
@@ -245,6 +347,7 @@
                 image: "https://via.placeholder.com/300x200?text=VARTA+60Ah",
                 capacity: "60Ah",
                 current: "540A",
+                dimensions: "242x175x190mm",
                 price: 179
             },
             {
@@ -253,6 +356,7 @@
                 image: "https://via.placeholder.com/300x200?text=BOSCH+72Ah",
                 capacity: "72Ah",
                 current: "680A",
+                dimensions: "278x175x190mm",
                 price: 210
             },
             {
@@ -261,16 +365,49 @@
                 image: "https://via.placeholder.com/300x200?text=Mutlu+65Ah",
                 capacity: "65Ah",
                 current: "600A",
+                dimensions: "242x175x190mm",
                 price: 150
             }
         ];
 
-        // Загрузка товаров
+        // Модели автомобилей
+        const carModels = {
+            bmw: ["3 Seriyası", "5 Seriyası", "X5"],
+            mercedes: ["C-klass", "E-klass", "GLC"],
+            audi: ["A4", "A6", "Q5"],
+            toyota: ["Camry", "Corolla", "RAV4"]
+        };
+
+        // Годы выпуска
+        const carYears = ["2020-2023", "2015-2019", "2010-2014", "2005-2009"];
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загрузка товаров
+            loadProducts();
+            // Меню для мобильных
+            setupMobileMenu();
+            
+            // Навигация по страницам
+            setupNavigation();
+            
+            // Подбор по авто
+            setupCarSelection();
+            
+            // Кнопка "В корзину"
+            setupAddToCart();
+            
+            // Кнопка "Каталог" на главной
+            setupCatalogButton();
+        });
+
+        // Загрузка товаров в каталог
         function loadProducts() {
             const productGrid = document.querySelector('.product-grid');
             
             if (productGrid) {
                 productGrid.innerHTML = '';
+                
                 products.forEach(product => {
                     productGrid.innerHTML += 
                         <div class="product-card">
@@ -280,9 +417,10 @@
                                 <div class="product-specs">
                                     <p><strong>Güc:</strong> ${product.capacity}</p>
                                     <p><strong>Başlatma cərəyanı:</strong> ${product.current}</p>
+                                    <p><strong>Ölçülər:</strong> ${product.dimensions}</p>
                                 </div>
                                 <div class="product-price">$${product.price}</div>
-                                <button class="btn add-to-cart">Səbətə əlavə et</button>
+                                <button class="btn add-to-cart" data-id="${product.id}">Səbətə əlavə et</button>
                             </div>
                         </div>
                     ;
@@ -290,14 +428,23 @@
             }
         }
 
-        // Навигация по страницам
-        document.addEventListener('DOMContentLoaded', function() {
-            // Загружаем товары
-            loadProducts();
+        // Мобильное меню
+        function setupMobileMenu() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
             
-            // Обработчики навигации
+            if (menuToggle && navMenu) {
+                menuToggle.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                });
+            }
+        }
+
+        // Навигация по страницам
+        function setupNavigation() {
             const navLinks = document.querySelectorAll('.nav-link');
-            const pages = document.querySelectorAll('.page-content');
+            const pages = document.querySelectorAll('.page');
+            const navMenu = document.querySelector('.nav-menu');
             
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -313,30 +460,81 @@
                     // Показываем нужную страницу
                     const pageId = this.getAttribute('data-page');
                     document.getElementById(pageId).classList.add('active');
+                    
+                    // Закрываем меню на мобильных
+                    if (navMenu) navMenu.classList.remove('active');
                 });
             });
+        }
+
+        // Подбор по авто
+        function setupCarSelection() {
+            const carBrand = document.getElementById('car-brand');
+            const carModel = document.getElementById('car-model');
+            const carYear = document.getElementById('car-year');
+            const findBtn = document.querySelector('.find-battery');
             
-            // Кнопка "Kataloga bax" на главной
+            if (carBrand) {
+                carBrand.addEventListener('change', function() {
+                    if (this.value) {
+                        carModel.innerHTML = '<option value="">Model seçin</option>';
+                        carModels[this.value].forEach(model => {
+                            carModel.innerHTML += <option value="${model}">${model}</option>;
+                        });
+                        carModel.disabled = false;
+                    } else {
+                        carModel.innerHTML = '<option value="">Əvvəlcə marka seçin</option>';
+                        carModel.disabled = true;
+                        carYear.disabled = true;
+                    }
+                    carYear.innerHTML = '<option value="">Əvvəlcə model seçin</option>';
+                });
+                
+                carModel.addEventListener('change', function() {
+                    if (this.value) {
+                        carYear.innerHTML = '';
+                        carYears.forEach(year => {
+                            carYear.innerHTML += <option value="${year}">${year}</option>;
+                        });
+                        carYear.disabled = false;
+                    } else {
+                        carYear.innerHTML = '<option value="">Əvvəlcə model seçin</option>';
+                        carYear.disabled = true;
+                    }
+                });
+                
+                findBtn.addEventListener('click', function() {
+                    if (carBrand.value && carModel.value && carYear.value) {
+                        alert('Uyğun akkumulyatorlar tapıldı! Kataloq bölməsinə yönləndirilirsiniz.');
+                        document.querySelector('[data-page="catalog"]').click();
+                    } else {
+                        alert('Zəhmət olmasa bütün sahələri doldurun!');
+                    }
+                });
+            }
+        }
+
+        // Кнопка "В корзину"
+        function setupAddToCart() {
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('add-to-cart')) {
+                    const productId = e.target.getAttribute('data-id');
+                    const product = products.find(p => p.id == productId);
+                    alert(${product.name} səbətə əlavə edildi!\nQiymət: $${product.price});
+                }
+            });
+        }
+
+        // Кнопка "Каталог" на главной
+        function setupCatalogButton() {
             const showCatalogBtn = document.querySelector('.show-catalog');
             if (showCatalogBtn) {
                 showCatalogBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    document.querySelector('[data-page="catalog"]').classList.add('active');
-                    
-                    pages.forEach(page => page.classList.remove('active'));
-                    document.getElementById('catalog').classList.add('active');
+                    document.querySelector('[data-page="catalog"]').click();
                 });
             }
-            
-            // Кнопки "Добавить в корзину"
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('add-to-cart')) {
-                    alert('Akkumulyator səbətə əlavə edildi!');
-                }
-            });
-        });
+        }
     </script>
 </body>
 </html>
