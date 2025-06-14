@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Akkumulyator Mağazası</title>
     <style>
+        /* Общие стили */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -16,8 +17,19 @@
             background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+        
+        /* Шапка */
         header {
             background: linear-gradient(135deg, #2c3e50, #3498db);
             color: white;
@@ -25,12 +37,52 @@
             text-align: center;
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+        /* Навигация */
+        nav {
+            background: #34495e;
         }
         
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            padding: 15px 0;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            background: #3498db;
+        }
+        
+        nav ul li a.active {
+            background: #3498db;
+            font-weight: bold;
+        }
+        
+        /* Основной контент */
+        .page-content {
+            display: none;
+        }
+        
+        .page-content.active {
+            display: block;
+        }
+        
+        /* Главная страница */
+        .hero {
+            text-align: center;
+            padding: 50px 0;
+        }
+        
+        /* Каталог */
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -80,43 +132,25 @@
             font-weight: bold;
         }
         
-        .add-to-cart {
-            display: block;
-            width: 100%;
-            padding: 10px;
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
             background: #3498db;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            text-decoration: none;
             margin-top: 15px;
-            font-weight: bold;
             transition: background 0.3s;
         }
         
-        .add-to-cart:hover {
+        .btn:hover {
             background: #2980b9;
         }
         
-        /* Навигация и футер */
-        nav {
-            background: #34495e;
-            padding: 1rem 0;
-        }
-        
-        nav ul {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-        }
-        
-        nav ul li a {
-            color: white;
-            text-decoration: none;
-            padding: 0 20px;
-            font-weight: bold;
-        }
-        
+        /* Подвал */
         footer {
             background: #2c3e50;
             color: white;
@@ -136,30 +170,63 @@
     
     <nav>
         <ul>
-            <li><a href="#">Əsas Səhifə</a></li>
-            <li><a href="#">Kataloq</a></li>
-            <li><a href="#">Avtomobilə görə seçim</a></li>
-            <li><a href="#">Çatdırılma</a></li>
-            <li><a href="#">Əlaqə</a></li>
+            <li><a href="#" class="nav-link active" data-page="home">Əsas Səhifə</a></li>
+            <li><a href="#" class="nav-link" data-page="catalog">Kataloq</a></li>
+            <li><a href="#" class="nav-link" data-page="selection">Avtomobilə görə seçim</a></li>
+            <li><a href="#" class="nav-link" data-page="delivery">Çatdırılma</a></li>
+            <li><a href="#" class="nav-link" data-page="contact">Əlaqə</a></li>
         </ul>
     </nav>
     
     <div class="container">
-        <!-- Пример одного товара - этот блок вы будете копировать и заполнять своими товарами --> 
-      <div class="product-info">
-                    <h3 class="product-title">AKKUMULYATOR ADI</h3>
-                    <div class="product-specs">
-                        <p><strong>Güc:</strong> 60Ah</p>
-                        <p><strong>Başlatma cərəyanı:</strong> 540A</p>
-                        <p><strong>Ölçülər:</strong> 242x175x190mm</p>
-                    </div>
-                    <div class="product-price">$XXX</div>
-                    <button class="add-to-cart">Səbətə əlavə et</button>
-                </div>
+        <!-- Главная страница -->
+        <div id="home" class="page-content active">
+            <section class="hero">
+                <h2>Xoş gəlmisiniz!</h2>
+                <p>Geniş çeşid və sərfəli qiymətlər</p>
+                <a href="#" class="btn show-catalog">Kataloga bax</a>
+            </section>
+        </div>
+        
+        <!-- Каталог -->
+        <div id="catalog" class="page-content">
+            <h2>Akkumulyator Kataloqu</h2>
+            <p>Bütün modellər və texniki xüsusiyyətlər</p>
+            
+            <div class="product-grid">
+                <!-- Товары будут добавляться через JavaScript -->
             </div>
-            
-            <!-- Сюда добавляйте новые товары, копируя блок выше -->
-            
+        </div>
+        
+        <!-- Подбор по авто -->
+        <div id="selection" class="page-content">
+            <h2>Avtomobilə görə seçim</h2>
+            <form id="car-selection">
+                <div>
+                    <label for="car-brand">Marka:</label>
+                    <select id="car-brand">
+                        <option value="">Seçin</option>
+                        <option value="bmw">BMW</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+                </div>
+                <button type="button" class="btn find-battery">Akkumulyator tap</button>
+            </form>
+        </div>
+        
+        <!-- Доставка -->
+        <div id="delivery" class="page-content">
+            <h2>Çatdırılma şərtləri</h2>
+            <p>Bakı şəhəri daxilində pulsuz çatdırılma</p>
+            <p>Regionlara çatdırılma 2-3 iş günü ərzində</p>
+        </div>
+        
+        <!-- Контакты -->
+        <div id="contact" class="page-content">
+            <h2>Əlaqə</h2>
+            <p>Telefon: +994 12 345 67 89</p>
+            <p>Ünvan: Bakı şəhəri, Nəsimi rayonu</p>
         </div>
     </div>
     
@@ -168,8 +235,108 @@
             <p>© 2023 Akkumulyator Mağazası. Bütün hüquqlar qorunur.</p>
         </div>
     </footer>
+
+    <script>
+        // Данные товаров
+        const products = [
+            {
+                id: 1,
+                name: "VARTA Blue Dynamic",
+                image: "https://via.placeholder.com/300x200?text=VARTA+60Ah",
+                capacity: "60Ah",
+                current: "540A",
+                price: 179
+            },
+            {
+                id: 2,
+                name: "BOSCH S4",
+                image: "https://via.placeholder.com/300x200?text=BOSCH+72Ah",
+                capacity: "72Ah",
+                current: "680A",
+                price: 210
+            },
+            {
+                id: 3,
+                name: "Mutlu Silver",
+                image: "https://via.placeholder.com/300x200?text=Mutlu+65Ah",
+                capacity: "65Ah",
+                current: "600A",
+                price: 150
+            }
+        ];
+
+        // Загрузка товаров
+        function loadProducts() {
+            const productGrid = document.querySelector('.product-grid');
+            
+            if (productGrid) {
+                productGrid.innerHTML = '';
+                products.forEach(product => {
+                    productGrid.innerHTML += 
+                        <div class="product-card">
+                            <img src="${product.image}" alt="${product.name}" class="product-image">
+                            <div class="product-info">
+                                <h3 class="product-title">${product.name}</h3>
+                                <div class="product-specs">
+                                    <p><strong>Güc:</strong> ${product.capacity}</p>
+                                    <p><strong>Başlatma cərəyanı:</strong> ${product.current}</p>
+                                </div>
+                                <div class="product-price">$${product.price}</div>
+                                <button class="btn add-to-cart">Səbətə əlavə et</button>
+                            </div>
+                        </div>
+                    ;
+                });
+            }
+        }
+
+        // Навигация по страницам
+        document.addEventListener('DOMContentLoaded', function() {
+            // Загружаем товары
+            loadProducts();
+            
+            // Обработчики навигации
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page-content');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Удаляем активный класс у всех ссылок
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    // Добавляем активный класс текущей ссылке
+                    this.classList.add('active');
+                    
+                    // Скрываем все страницы
+                    pages.forEach(page => page.classList.remove('active'));
+                    // Показываем нужную страницу
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                });
+            });
+            
+            // Кнопка "Kataloga bax" на главной
+            const showCatalogBtn = document.querySelector('.show-catalog');
+            if (showCatalogBtn) {
+                showCatalogBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    document.querySelector('[data-page="catalog"]').classList.add('active');
+                    
+                    pages.forEach(page => page.classList.remove('active'));
+                    document.getElementById('catalog').classList.add('active');
+                });
+            }
+            
+            // Кнопки "Добавить в корзину"
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('add-to-cart')) {
+                    alert('Akkumulyator səbətə əlavə edildi!');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="placeholder-image.jpg" alt="Akkumulyator" class="product-image">
