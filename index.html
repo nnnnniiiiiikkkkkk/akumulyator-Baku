@@ -166,7 +166,334 @@
         .btn:hover {
             background: #2980b9;
         }
+
+        // batteryAI.js - ИИ модуль для магазина аккумуляторов
+
+class BatteryAI {
+  constructor(products) {
+    this.products = products;
+    this.userPreferences = {};
+    this.initNLP();
+  }
+
+  // Инициализация обработки естественного языка
+  initNLP() {
+    this.keywords = {
+      'price': ['ucuz', 'bahalı', 'qiymət', 'narx', 'budget'],
+      'capacity': ['güc', 'aH', 'amper', 'capacity'],
+      'brand': ['marka', 'brand', 'varta', 'bosch', 'mutlu'],
+      'warranty': ['zəmanət', 'warranty', 'qarantiya'],
+      'delivery': ['çatdırılma', 'delivery', 'çatdırma', 'teslimat']
+    };
+  }
+
+  // Рекомендательная система
+  recommendBatteries(userData) {
+    // Анализ данных пользователя (история просмотров, автомобиль и т.д.)
+    this.updateUserPreferences(userData);
+    
+    // Фильтрация продуктов по предпочтениям
+    let recommendations = this.filterProducts();
+    
+    // Сортировка по релевантности
+    recommendations.sort((a, b) => {
+      const scoreA = this.calculateRelevanceScore(a);
+      const scoreB = this.calculateRelevanceScore(b);
+      return scoreB - scoreA;
+    });
+    
+    return recommendations.slice(0, 3); // Топ-3 рекомендации
+  }
+
+  // Обновление предпочтений пользователя
+  updateUserPreferences(userData) {
+    if (userData.carBrand && userData.carModel) {
+      this.userPreferences.carType = ${userData.carBrand} ${userData.carModel};
+      
+      // Определяем типичные требования для этого авто
+      if (userData.carBrand.toLowerCase() === 'bmw') {
+        this.userPreferences.minCapacity = 60;
+        this.userPreferences.prefBrands = ['VARTA', 'BOSCH'];
+      } else if (userData.carBrand.toLowerCase() === 'toyota') {
+        this.userPreferences.minCapacity = 45;
+        this.userPreferences.prefBrands = ['Mutlu', 'VARTA'];
+      }
+    }
+    
+    if (userData.viewHistory) {
+      userData.viewHistory.forEach(item => {
+        if (item.category === 'premium') {
+          this.userPreferences.priceRange = 'high';
+        }
+      });
+    }
+  }
+
+  // Фильтрация продуктов по предпочтениям
+  filterProducts() {
+    let filtered = [...this.products];
+    
+    if (this.userPreferences.minCapacity) {
+      filtered = filtered.filter(p => 
+        parseInt(p.capacity) >= this.userPreferences.minCapacity
+      );
+    }
+    
+    if (this.userPreferences.prefBrands) {
+      filtered = filtered.filter(p =>
+        this.userPreferences.prefBrands.some(brand => 
+          p.name.includes(brand)
+        )
+      );
+    }
+    
+    if (this.userPreferences.priceRange === 'high') {
+      filtered = filtered.filter(p => p.price > 150);
+    } else if (this.userPreferences.priceRange === 'low') {
+      filtered = filtered.filter(p => p.price <= 150);
+    }
+    
+    return filtered;
+  }
+
+  // Расчет релевантности продукта
+  calculateRelevanceScore(product) {
+    let score = 0;
+    
+    // Совпадение с предпочитаемыми брендами
+    if (this.userPreferences.prefBrands && 
+        this.userPreferences.prefBrands.some(b => product.name.includes(b))) {
+      score += 30;
+    }
+    
+    // Соответствие минимальной емкости
+    if (this.userPreferences.minCapacity && 
+        parseInt(product.capacity) >= this.userPreferences.minCapacity) {
+      score += 20;
+    }
+    
+    // Дополнительные баллы за популярность и т.д.
+    if (product.name.includes('VARTA')) score += 10;
+    if (product.price < 160) score += 5;
+    
+    return score;
+  }
+
+  // Обработка естественного языка (чат-бот)
+  processQuery(query) {
+    const lowerQuery = query.toLowerCase();
+    let response = '';
+    
+    // Определение намерения пользователя
+    if (this.containsAny(lowerQuery, ['salam', 'salamun aleykum', 'merhaba'])) {
+      response = 'Salam! Sizə necə kömək edə bilərəm?';
+    } 
+    else if (this.containsAny(lowerQuery, this.keywords.price)) {
+      response = 'Bizdə akkumulyatorlar 150 AZN-dən başlayaraq 600 AZN-dək qiymətlərdədir. ' +
+        'Xüsusi endirimlərimiz haqqında məlumat üçün kataloqa baxa bilərsiniz.';
+    }
+    else if (this.containsAny(lowerQuery, this.keywords.capacity)) {
+      response = 'Akkumulyatorun gücü (Ah) avtomobilinizin ehtiyacından asılıdır. ' +
+                 'Avtomobilinizin marka və modelinə görə sizə uyğun akkumulyator tövsiyə edə bilərəm.';
+    }
+    else if (this.containsAny(lowerQuery, this.keywords.delivery)) {
+      response = 'Bakı daxilində çatdırılma pulsuzdur və 24 saat ərzində həyata keçirilir. ' +
+                 'Regionlara çatdırılma 2-3 iş günü çəkir. Ətraflı məlumat üçün "Çatdırılma" bölməsinə baxa bilərsiniz.';
+    }
+    else {
+      response = 'Bağışlayın, sualınızı tam başa düşmədim. ' +
+                 'Daha dəqiq məlumat üçün kataloqa baxa və ya avtomobilinizə görə axtarış edə bilərsiniz.';
+    }
+    
+    return response;
+  }
+
+  // Вспомогательная функция для проверки ключевых слов
+  containsAny(str, keywords) {
+    return keywords.some(keyword => str.includes(keyword));
+  }
+
+  // Интеллектуальный поиск по каталогу
+  intelligentSearch(query) {
+    const results = [];
+    const lowerQuery = query.toLowerCase();
+    
+    this.products.forEach(product => {
+      let score = 0;
+      
+      // Проверка названия
+      if (product.name.toLowerCase().includes(lowerQuery)) {
+        score += 30;
+      }
+      
+      // Проверка характеристик
+      if (product.capacity.includes(query)) score += 20;
+      if (product.current.includes(query)) score += 15;
+      
+      // Проверка цены
+      if (!isNaN(query) && parseInt(query) >= product.price - 20 && parseInt(query) <= product.price + 20) {
+        score += 10;
+      }
+      
+      if (score > 0) {
+        results.push({ product, score });
+      }
+    });
+    
+    // Сортировка по релевантности
+    results.sort((a, b) => b.score - a.score);
+    
+    return results.map(item => item.product);
+  }
+}
+
+// Инициализация ИИ с продуктами
+const ai = new BatteryAI(products);
+
+// Интеграция с вашим существующим кодом
+document.addEventListener('DOMContentLoaded', function() {
+  // Добавляем чат-бот в интерфейс
+  addChatInterface();
+  
+  // Улучшаем поиск
+  enhanceSearch();
+});
+
+// Добавление интерфейса чата
+function addChatInterface() {
+  const chatHTML = 
+    <div id="ai-chat-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+      <div id="ai-chat-box" style="display: none; width: 300px; height: 400px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; flex-direction: column;">
+        <div style="background: #3498db; color: white; padding: 10px; font-weight: bold; display: flex; justify-content: space-between;">
+          <span>Köməkçi</span>
+          <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer;">×</button>
+        </div>
+        <div id="chat-messages" style="flex: 1; padding: 10px; overflow-y: auto;"></div>
+        <div style="padding: 10px; border-top: 1px solid #eee; display: flex;">
+          <input id="chat-input" type="text" placeholder="Sualınızı yazın..." style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px 0 0 5px;">
+          <button id="send-message" style="padding: 8px 15px; background: #3498db; color: white; border: none; border-radius: 0 5px 5px 0; cursor: pointer;">Göndər</button>
+        </div>
+      </div>
+      <button id="chat-toggle" style="background: #3498db; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; font-size: 20px; cursor: pointer; box-shadow: 0 0 10px rgba(0,0,0,0.2);">?</button>
+    </div>
+  ;
+  
+  document.body.insertAdjacentHTML('beforeend', chatHTML);
+  
+  // Обработчики событий чата
+  document.getElementById('chat-toggle').addEventListener('click', function() {
+      const chatBox = document.getElementById('ai-chat-box');
+    chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
+  });
+  
+  document.getElementById('close-chat').addEventListener('click', function() {
+    document.getElementById('ai-chat-box').style.display = 'none';
+  });
+  
+  document.getElementById('send-message').addEventListener('click', sendMessage);
+  document.getElementById('chat-input').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') sendMessage();
+  });
+  
+  function sendMessage() {
+    const input = document.getElementById('chat-input');
+    const message = input.value.trim();
+    
+    if (message) {
+      addMessage(message, 'user');
+      input.value = '';
+      
+      // ИИ обрабатывает запрос
+      setTimeout(() => {
+        const response = ai.processQuery(message);
+        addMessage(response, 'bot');
+      }, 500);
+    }
+  }
+  
+  function addMessage(text, sender) {
+    const messages = document.getElementById('chat-messages');
+    const messageDiv = document.createElement('div');
+    messageDiv.style.marginBottom = '10px';
+    messageDiv.style.padding = '8px 12px';
+    messageDiv.style.borderRadius = '5px';
+    messageDiv.style.maxWidth = '80%';
+    messageDiv.style.wordWrap = 'break-word';
+    
+    if (sender === 'user') {
+      messageDiv.style.background = '#e3f2fd';
+      messageDiv.style.marginLeft = 'auto';
+    } else {
+      messageDiv.style.background = '#f1f1f1';
+      messageDiv.style.marginRight = 'auto';
+    }
+    
+    messageDiv.textContent = text;
+    messages.appendChild(messageDiv);
+    messages.scrollTop = messages.scrollHeight;
+  }
+}
+
+// Улучшение поиска
+function enhanceSearch() {
+  // Добавляем поле поиска, если его нет
+  if (!document.getElementById('search-box')) {
+    const searchHTML = 
+      <div style="margin: 20px 0; text-align: center;">
+        <input id="search-box" type="text" placeholder="Akkumulyator axtar..." style="padding: 10px; width: 80%; max-width: 500px; border: 1px solid #ddd; border-radius: 5px;">
+        <button id="search-button" style="padding: 10px 15px; background: #3498db; color: white; border: none; border-radius: 5px; margin-left: 5px; cursor: pointer;">Axtar</button>
+      </div>
+      <div id="search-results" style="margin-top: 20px;"></div>
+    ;
+    
+    const catalogPage = document.getElementById('catalog');
+    if (catalogPage) {
+      catalogPage.insertAdjacentHTML('afterbegin', searchHTML);
+      
+      // Обработчики поиска
+      document.getElementById('search-button').addEventListener('click', performSearch);
+      document.getElementById('search-box').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') performSearch();
+      });
+    }
+  }
+  
+  function performSearch() {
+    const query = document.getElementById('search-box').value.trim();
+    const resultsContainer = document.getElementById('search-results');
+    
+    if (query) {
+      const results = ai.intelligentSearch(query);
+      
+      if (results.length > 0) {
+        let resultsHTML = '<h3>Axtarış nəticələri:</h3><div class="product-grid">';
         
+        results.forEach(product => {
+          resultsHTML += `
+            <div class="product-card">
+              <img src="${product.image}" alt="${product.name}" class="product-image">
+              <div class="product-info">
+                <h3 class="product-title">${product.name}</h3>
+                <div class="product-specs">
+                  <p><strong>Güc:</strong> ${product.capacity}</p>
+                  <p><strong>Başlatma cərəyanı:</strong> ${product.current}</p>
+                  <p><strong>Ölçülər:</strong> ${product.dimensions}</p>
+                </div>
+                <div class="product-price">$${product.price}</div>
+                <button class="btn add-to-cart" data-id="${product.id}">Səbətə əlavə et</button>
+            </div>
+            </div>
+          `;
+        });
+        
+        resultsHTML += '</div>';
+        resultsContainer.innerHTML = resultsHTML;
+      } else {
+        resultsContainer.innerHTML = '<p>Heç bir nəticə tapılmadı. Başqa açar sözlər yoxlayın.</p>';
+      }
+    }
+  }
+}
         /* Подбор по авто */
         .car-selection {
             max-width: 500px;
