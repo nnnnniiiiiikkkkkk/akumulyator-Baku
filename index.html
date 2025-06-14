@@ -97,7 +97,96 @@
             margin-bottom: 15px;
             font-size: 1.8rem;
         }
+
+        // Полный код для меню и переключения страниц
+document.addEventListener('DOMContentLoaded', function() {
+    // Элементы меню
+    const menuToggle = document.querySelector('.menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const pages = document.querySelectorAll('.page');
+    
+    // Функция переключения страниц
+    function switchPage(pageId) {
+        // Скрыть все страницы
+        pages.forEach(page => {
+            page.classList.remove('active');
+        });
         
+        // Показать выбранную страницу
+        document.getElementById(pageId).classList.add('active');
+        
+        // Обновить активную ссылку в меню
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('data-page') === pageId) {
+                link.classList.add('active');
+            }
+        });
+        
+        // Закрыть меню на мобильных
+        if (navMenu) navMenu.classList.remove('active');
+    }
+    
+    // Обработчик для кнопки меню (гамбургера)
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+    }
+
+            @media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+        padding: 10px 15px;
+    }
+    
+    .nav-menu {
+        position: fixed;
+        top: 60px;
+        left: -100%;
+        width: 80%;
+        height: calc(100vh - 60px);
+        background: #2c3e50;
+        flex-direction: column;
+        transition: all 0.3s;
+        padding: 20px 0;
+    }
+    
+    .nav-menu.active {
+        left: 0;
+    }
+    
+    .nav-menu li {
+        margin: 5px 0;
+    }
+    
+    .nav-menu li a {
+        padding: 12px 20px;
+    }
+}
+    // Обработчики для ссылок меню
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const pageId = this.getAttribute('data-page');
+            switchPage(pageId);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+    
+    // Обработчик для кнопки "Каталог" на главной
+    const showCatalogBtn = document.querySelector('.show-catalog');
+    if (showCatalogBtn) {
+        showCatalogBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            switchPage('catalog');
+        });
+    }
+    
+    // По умолчанию показываем главную страницу
+    switchPage('home');
+});
         /* Каталог */
         .product-grid {
             display: grid;
