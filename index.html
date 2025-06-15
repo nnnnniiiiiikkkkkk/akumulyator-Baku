@@ -1,22 +1,33 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Akkumulyator Mağazası</title>
+    <title>BatteryPro - Магазин аккумуляторов</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Общие стили */
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --gray: #95a5a6;
         }
         
         body {
-            background-color: #f5f5f5;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 60px;
         }
         
         .container {
@@ -25,932 +36,902 @@
             padding: 0 15px;
         }
         
-        /* Шапка */
+        /* Header Styles */
         header {
-            background: linear-gradient(135deg, #2c3e50, #3498db);
+            background: linear-gradient(135deg, var(--primary), var(--dark));
             color: white;
-            padding: 1.5rem 0;
-            text-align: center;
-        }
-        
-        /* Навигация */
-        nav {
-            background: #34495e;
+            padding: 15px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             position: sticky;
             top: 0;
             z-index: 100;
         }
         
-        .nav-container {
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
         }
         
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        
-        .nav-menu {
+        .logo {
             display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+            color: var(--secondary);
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            padding: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            background: rgba(255,255,255,0.15);
+        }
+        
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            margin: 40px 0;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Battery Sections */
+        .section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary);
+        }
+        
+        .section-title h2 {
+            font-size: 24px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .section-title i {
+            font-size: 22px;
+            color: var(--secondary);
+            background: rgba(52, 152, 219, 0.1);
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Battery Items */
+        .battery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .battery-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .battery-item:hover {
+            background: #ffffff;
+            border-color: var(--secondary);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.15);
+        }
+        
+        .battery-img {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #f1f8ff, #e3eeff);
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 22px;
+            text-align: center;
+            line-height: 1.4;
+            color: var(--primary);
+            padding: 15px;
+        }
+        
+        .battery-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .battery-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .spec-item {
+            background: #e3f2fd;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .battery-price {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent);
+            margin: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .battery-price::before {
+            content: "€";
+            font-size: 18px;
+        }
+        
+        .battery-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            color: white;
+            flex: 1;
+        }
+        
+        .btn-primary:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+        
+        .btn-secondary:hover {
+            background: #d5dbdb;
+        }
+        
+        /* Table Styles */
+        .spec-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .spec-table th, .spec-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .spec-table th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .spec-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* AI Assistant */
+        .ai-assistant {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .ai-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .ai-title h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .ai-title p {
+            color: rgba(255,255,255,0.8);
+            font-size: 15px;
+        }
+        
+        .ai-conversation {
+            height: 250px;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(0,0,0,0.15);
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 85%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            position: relative;
+            animation: fadeIn 0.4s ease;
+            line-height: 1.5;
+            font-size: 15px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .user-message {
+            background: var(--secondary);
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .ai-message {
+            background: rgba(255,255,255,0.15);
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .ai-input-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .ai-input {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+        
+        .ai-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .ai-send {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: var(--secondary);
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+        
+        .ai-send:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        
+        .lang-toggle {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .lang-btn {
+            padding: 8px 20px;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            color: white;
+            font-weight: 500;
+        }
+        
+        .lang-btn.active {
+            background: var(--secondary);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary);
+        }
+        
+        .footer-column ul {
             list-style: none;
         }
         
-        .nav-menu li a {
-            color: white;
-            text-decoration: none;
-            padding: 10px 15px;
-            display: block;
-            transition: all 0.3s;
-            border-radius: 5px;
-        }
-        
-        .nav-menu li a:hover, 
-        .nav-menu li a.active {
-            background: #3498db;
-        }
-        
-        /* Основной контент */
-        .page {
-            display: none;
-            padding: 20px 0;
-            min-height: 60vh;
-        }
-        
-        .page.active {
-            display: block;
-        }
-        
-        /* Главная страница */
-        .hero {
-            text-align: center;
-            padding: 30px 0;
-        }
-        
-        .hero h2 {
-            margin-bottom: 15px;
-            font-size: 1.8rem;
-        }
-
-        // Полный код для меню и переключения страниц
-document.addEventListener('DOMContentLoaded', function() {
-    // Элементы меню
-    const menuToggle = document.querySelector('.menu-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const pages = document.querySelectorAll('.page');
-    
-    // Функция переключения страниц
-    function switchPage(pageId) {
-        // Скрыть все страницы
-        pages.forEach(page => {
-            page.classList.remove('active');
-        });
-        
-        // Показать выбранную страницу
-        document.getElementById(pageId).classList.add('active');
-        
-        // Обновить активную ссылку в меню
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('data-page') === pageId) {
-                link.classList.add('active');
-            }
-        });
-        
-        // Закрыть меню на мобильных
-        if (navMenu) navMenu.classList.remove('active');
-    }
-    
-    // Обработчик для кнопки меню (гамбургера)
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-        });
-    }
-
-            @media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-        padding: 10px 15px;
-    }
-    
-    .nav-menu {
-        position: fixed;
-        top: 60px;
-        left: -100%;
-        width: 80%;
-        height: calc(100vh - 60px);
-        background: #2c3e50;
-        flex-direction: column;
-        transition: all 0.3s;
-        padding: 20px 0;
-    }
-    
-    .nav-menu.active {
-        left: 0;
-    }
-    
-    .nav-menu li {
-        margin: 5px 0;
-    }
-    
-    .nav-menu li a {
-        padding: 12px 20px;
-    }
-}
-    // Обработчики для ссылок меню
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const pageId = this.getAttribute('data-page');
-            switchPage(pageId);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-    });
-    
-    // Обработчик для кнопки "Каталог" на главной
-    const showCatalogBtn = document.querySelector('.show-catalog');
-    if (showCatalogBtn) {
-        showCatalogBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            switchPage('catalog');
-        });
-    }
-    
-    // По умолчанию показываем главную страницу
-    switchPage('home');
-});
-        /* Каталог */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px 0;
-        }
-        
-        .product-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .product-image {
-            width: 100%;
-            height: 180px;
-            object-fit: contain;
-            background: #f9f9f9;
-            padding: 15px;
-        }
-        
-        .product-info {
-            padding: 15px;
-        }
-        
-        .product-title {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
-            color: #2c3e50;
-        }
-        
-        .product-specs {
-            color: #7f8c8d;
+        .footer-column li {
             margin-bottom: 12px;
-            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
-        .product-price {
-            font-size: 1.3rem;
-            color: #e74c3c;
-            font-weight: bold;
+        .footer-column i {
+            color: var(--secondary);
+            width: 20px;
         }
         
-        /* Кнопки */
-        .btn {
-            display: inline-block;
-            padding: 8px 16px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .footer-column a {
+            color: #ddd;
             text-decoration: none;
-            margin-top: 10px;
-            transition: background 0.3s;
-            font-size: 0.9rem;
+            transition: all 0.3s ease;
         }
         
-        .btn:hover {
-            background: #2980b9;
-        }
-
-        // batteryAI.js - ИИ модуль для магазина аккумуляторов
-
-class BatteryAI {
-  constructor(products) {
-    this.products = products;
-    this.userPreferences = {};
-    this.initNLP();
-  }
-
-  // Инициализация обработки естественного языка
-  initNLP() {
-    this.keywords = {
-      'price': ['ucuz', 'bahalı', 'qiymət', 'narx', 'budget'],
-      'capacity': ['güc', 'aH', 'amper', 'capacity'],
-      'brand': ['marka', 'brand', 'varta', 'bosch', 'mutlu'],
-      'warranty': ['zəmanət', 'warranty', 'qarantiya'],
-      'delivery': ['çatdırılma', 'delivery', 'çatdırma', 'teslimat']
-    };
-  }
-
-  // Рекомендательная система
-  recommendBatteries(userData) {
-    // Анализ данных пользователя (история просмотров, автомобиль и т.д.)
-    this.updateUserPreferences(userData);
-    
-    // Фильтрация продуктов по предпочтениям
-    let recommendations = this.filterProducts();
-    
-    // Сортировка по релевантности
-    recommendations.sort((a, b) => {
-      const scoreA = this.calculateRelevanceScore(a);
-      const scoreB = this.calculateRelevanceScore(b);
-      return scoreB - scoreA;
-    });
-    
-    return recommendations.slice(0, 3); // Топ-3 рекомендации
-  }
-
-  // Обновление предпочтений пользователя
-  updateUserPreferences(userData) {
-    if (userData.carBrand && userData.carModel) {
-      this.userPreferences.carType = ${userData.carBrand} ${userData.carModel};
-      
-      // Определяем типичные требования для этого авто
-      if (userData.carBrand.toLowerCase() === 'bmw') {
-        this.userPreferences.minCapacity = 60;
-        this.userPreferences.prefBrands = ['VARTA', 'BOSCH'];
-      } else if (userData.carBrand.toLowerCase() === 'toyota') {
-        this.userPreferences.minCapacity = 45;
-        this.userPreferences.prefBrands = ['Mutlu', 'VARTA'];
-      }
-    }
-    
-    if (userData.viewHistory) {
-      userData.viewHistory.forEach(item => {
-        if (item.category === 'premium') {
-          this.userPreferences.priceRange = 'high';
-        }
-      });
-    }
-  }
-
-  // Фильтрация продуктов по предпочтениям
-  filterProducts() {
-    let filtered = [...this.products];
-    
-    if (this.userPreferences.minCapacity) {
-      filtered = filtered.filter(p => 
-        parseInt(p.capacity) >= this.userPreferences.minCapacity
-      );
-    }
-    
-    if (this.userPreferences.prefBrands) {
-      filtered = filtered.filter(p =>
-        this.userPreferences.prefBrands.some(brand => 
-          p.name.includes(brand)
-        )
-      );
-    }
-    
-    if (this.userPreferences.priceRange === 'high') {
-      filtered = filtered.filter(p => p.price > 150);
-    } else if (this.userPreferences.priceRange === 'low') {
-      filtered = filtered.filter(p => p.price <= 150);
-    }
-    
-    return filtered;
-  }
-
-  // Расчет релевантности продукта
-  calculateRelevanceScore(product) {
-    let score = 0;
-    
-    // Совпадение с предпочитаемыми брендами
-    if (this.userPreferences.prefBrands && 
-        this.userPreferences.prefBrands.some(b => product.name.includes(b))) {
-      score += 30;
-    }
-    
-    // Соответствие минимальной емкости
-    if (this.userPreferences.minCapacity && 
-        parseInt(product.capacity) >= this.userPreferences.minCapacity) {
-      score += 20;
-    }
-    
-    // Дополнительные баллы за популярность и т.д.
-    if (product.name.includes('VARTA')) score += 10;
-    if (product.price < 160) score += 5;
-    
-    return score;
-  }
-
-  // Обработка естественного языка (чат-бот)
-  processQuery(query) {
-    const lowerQuery = query.toLowerCase();
-    let response = '';
-    
-    // Определение намерения пользователя
-    if (this.containsAny(lowerQuery, ['salam', 'salamun aleykum', 'merhaba'])) {
-      response = 'Salam! Sizə necə kömək edə bilərəm?';
-    } 
-    else if (this.containsAny(lowerQuery, this.keywords.price)) {
-      response = 'Bizdə akkumulyatorlar 150 AZN-dən başlayaraq 600 AZN-dək qiymətlərdədir. ' +
-        'Xüsusi endirimlərimiz haqqında məlumat üçün kataloqa baxa bilərsiniz.';
-    }
-    else if (this.containsAny(lowerQuery, this.keywords.capacity)) {
-      response = 'Akkumulyatorun gücü (Ah) avtomobilinizin ehtiyacından asılıdır. ' +
-                 'Avtomobilinizin marka və modelinə görə sizə uyğun akkumulyator tövsiyə edə bilərəm.';
-    }
-    else if (this.containsAny(lowerQuery, this.keywords.delivery)) {
-      response = 'Bakı daxilində çatdırılma pulsuzdur və 24 saat ərzində həyata keçirilir. ' +
-                 'Regionlara çatdırılma 2-3 iş günü çəkir. Ətraflı məlumat üçün "Çatdırılma" bölməsinə baxa bilərsiniz.';
-    }
-    else {
-      response = 'Bağışlayın, sualınızı tam başa düşmədim. ' +
-                 'Daha dəqiq məlumat üçün kataloqa baxa və ya avtomobilinizə görə axtarış edə bilərsiniz.';
-    }
-    
-    return response;
-  }
-
-  // Вспомогательная функция для проверки ключевых слов
-  containsAny(str, keywords) {
-    return keywords.some(keyword => str.includes(keyword));
-  }
-
-  // Интеллектуальный поиск по каталогу
-  intelligentSearch(query) {
-    const results = [];
-    const lowerQuery = query.toLowerCase();
-    
-    this.products.forEach(product => {
-      let score = 0;
-      
-      // Проверка названия
-      if (product.name.toLowerCase().includes(lowerQuery)) {
-        score += 30;
-      }
-      
-      // Проверка характеристик
-      if (product.capacity.includes(query)) score += 20;
-      if (product.current.includes(query)) score += 15;
-      
-      // Проверка цены
-      if (!isNaN(query) && parseInt(query) >= product.price - 20 && parseInt(query) <= product.price + 20) {
-        score += 10;
-      }
-      
-      if (score > 0) {
-        results.push({ product, score });
-      }
-    });
-    
-    // Сортировка по релевантности
-    results.sort((a, b) => b.score - a.score);
-    
-    return results.map(item => item.product);
-  }
-}
-
-// Инициализация ИИ с продуктами
-const ai = new BatteryAI(products);
-
-// Интеграция с вашим существующим кодом
-document.addEventListener('DOMContentLoaded', function() {
-  // Добавляем чат-бот в интерфейс
-  addChatInterface();
-  
-  // Улучшаем поиск
-  enhanceSearch();
-});
-
-// Добавление интерфейса чата
-function addChatInterface() {
-  const chatHTML = 
-    <div id="ai-chat-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
-      <div id="ai-chat-box" style="display: none; width: 300px; height: 400px; background: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); overflow: hidden; flex-direction: column;">
-        <div style="background: #3498db; color: white; padding: 10px; font-weight: bold; display: flex; justify-content: space-between;">
-          <span>Köməkçi</span>
-          <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer;">×</button>
-        </div>
-        <div id="chat-messages" style="flex: 1; padding: 10px; overflow-y: auto;"></div>
-        <div style="padding: 10px; border-top: 1px solid #eee; display: flex;">
-          <input id="chat-input" type="text" placeholder="Sualınızı yazın..." style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 5px 0 0 5px;">
-          <button id="send-message" style="padding: 8px 15px; background: #3498db; color: white; border: none; border-radius: 0 5px 5px 0; cursor: pointer;">Göndər</button>
-        </div>
-      </div>
-      <button id="chat-toggle" style="background: #3498db; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; font-size: 20px; cursor: pointer; box-shadow: 0 0 10px rgba(0,0,0,0.2);">?</button>
-    </div>
-  ;
-  
-  document.body.insertAdjacentHTML('beforeend', chatHTML);
-  
-  // Обработчики событий чата
-  document.getElementById('chat-toggle').addEventListener('click', function() {
-      const chatBox = document.getElementById('ai-chat-box');
-    chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
-  });
-  
-  document.getElementById('close-chat').addEventListener('click', function() {
-    document.getElementById('ai-chat-box').style.display = 'none';
-  });
-  
-  document.getElementById('send-message').addEventListener('click', sendMessage);
-  document.getElementById('chat-input').addEventListener('keypress', function(e) {
-    if (e.key === 'Enter') sendMessage();
-  });
-  
-  function sendMessage() {
-    const input = document.getElementById('chat-input');
-    const message = input.value.trim();
-    
-    if (message) {
-      addMessage(message, 'user');
-      input.value = '';
-      
-      // ИИ обрабатывает запрос
-      setTimeout(() => {
-        const response = ai.processQuery(message);
-        addMessage(response, 'bot');
-      }, 500);
-    }
-  }
-  
-  function addMessage(text, sender) {
-    const messages = document.getElementById('chat-messages');
-    const messageDiv = document.createElement('div');
-    messageDiv.style.marginBottom = '10px';
-    messageDiv.style.padding = '8px 12px';
-    messageDiv.style.borderRadius = '5px';
-    messageDiv.style.maxWidth = '80%';
-    messageDiv.style.wordWrap = 'break-word';
-    
-    if (sender === 'user') {
-      messageDiv.style.background = '#e3f2fd';
-      messageDiv.style.marginLeft = 'auto';
-    } else {
-      messageDiv.style.background = '#f1f1f1';
-      messageDiv.style.marginRight = 'auto';
-    }
-    
-    messageDiv.textContent = text;
-    messages.appendChild(messageDiv);
-    messages.scrollTop = messages.scrollHeight;
-  }
-}
-
-// Улучшение поиска
-function enhanceSearch() {
-  // Добавляем поле поиска, если его нет
-  if (!document.getElementById('search-box')) {
-    const searchHTML = 
-      <div style="margin: 20px 0; text-align: center;">
-        <input id="search-box" type="text" placeholder="Akkumulyator axtar..." style="padding: 10px; width: 80%; max-width: 500px; border: 1px solid #ddd; border-radius: 5px;">
-        <button id="search-button" style="padding: 10px 15px; background: #3498db; color: white; border: none; border-radius: 5px; margin-left: 5px; cursor: pointer;">Axtar</button>
-      </div>
-      <div id="search-results" style="margin-top: 20px;"></div>
-    ;
-    
-    const catalogPage = document.getElementById('catalog');
-    if (catalogPage) {
-      catalogPage.insertAdjacentHTML('afterbegin', searchHTML);
-      
-      // Обработчики поиска
-      document.getElementById('search-button').addEventListener('click', performSearch);
-      document.getElementById('search-box').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') performSearch();
-      });
-    }
-  }
-  
-  function performSearch() {
-    const query = document.getElementById('search-box').value.trim();
-    const resultsContainer = document.getElementById('search-results');
-    
-    if (query) {
-      const results = ai.intelligentSearch(query);
-      
-      if (results.length > 0) {
-        let resultsHTML = '<h3>Axtarış nəticələri:</h3><div class="product-grid">';
-        
-        results.forEach(product => {
-          resultsHTML += `
-            <div class="product-card">
-              <img src="${product.image}" alt="${product.name}" class="product-image">
-              <div class="product-info">
-                <h3 class="product-title">${product.name}</h3>
-                <div class="product-specs">
-                  <p><strong>Güc:</strong> ${product.capacity}</p>
-                  <p><strong>Başlatma cərəyanı:</strong> ${product.current}</p>
-                  <p><strong>Ölçülər:</strong> ${product.dimensions}</p>
-                </div>
-                <div class="product-price">$${product.price}</div>
-                <button class="btn add-to-cart" data-id="${product.id}">Səbətə əlavə et</button>
-            </div>
-            </div>
-          `;
-        });
-        
-        resultsHTML += '</div>';
-        resultsContainer.innerHTML = resultsHTML;
-      } else {
-        resultsContainer.innerHTML = '<p>Heç bir nəticə tapılmadı. Başqa açar sözlər yoxlayın.</p>';
-      }
-    }
-  }
-}
-        /* Подбор по авто */
-        .car-selection {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        .footer-column a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
         }
         
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        
-        .form-group select, 
-        .form-group input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        
-        /* Подвал */
-        footer {
-            background: #2c3e50;
-            color: white;
+        .copyright {
             text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            color: #bbb;
         }
         
-        /* Адаптация для мобильных */
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .menu-toggle {
-                display: block;
-                padding: 10px 15px;
-            }
-            
-            .nav-menu {
-                position: fixed;
-                top: 60px;
-                left: -100%;
-                width: 80%;
-                height: calc(100vh - 60px);
-                background: #2c3e50;
+            .header-content {
                 flex-direction: column;
-                transition: all 0.3s;
-                padding: 20px 0;
+                gap: 15px;
             }
             
-            .nav-menu.active {
-                left: 0;
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
-            .nav-menu li {
-                margin: 5px 0;
-            }
-            
-            .nav-menu li a {
-                padding: 12px 20px;
-            }
-            
-            .product-grid {
+            .battery-grid {
                 grid-template-columns: 1fr;
+            }
+            
+            .section-title h2 {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav a {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+            
+            .ai-input-group {
+                flex-direction: column;
+            }
+            
+            .ai-send {
+                width: 100%;
+                border-radius: 30px;
+                height: auto;
+                padding: 12px;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <header>
         <div class="container">
-            <h1>Akkumulyator Mağazası</h1>
-            <p>Yüksək keyfiyyətli avtomobil akkumulyatorları</p>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-battery-full"></i>
+                    <h1>BatteryPro</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="active">Главная</a></li>
+                        <li><a href="#">Топ аккумуляторы</a></li>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Доставка</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
-    
-    <nav>
-        <div class="container nav-container">
-            <button class="menu-toggle">☰</button>
-            <ul class="nav-menu">
-                <li><a href="#" class="nav-link active" data-page="home">Əsas Səhifə</a></li>
-                <li><a href="#" class="nav-link" data-page="catalog">Kataloq</a></li>
-                <li><a href="#" class="nav-link" data-page="selection">Avtomobilə görə seçim</a></li>
-                <li><a href="#" class="nav-link" data-page="delivery">Çatdırılma</a></li>
-                <li><a href="#" class="nav-link" data-page="contact">Əlaqə</a></li>
-            </ul>
-        </div>
-    </nav>
-    
+
+    <!-- Main Content -->
     <div class="container">
-        <!-- Главная страница -->
-        <div id="home" class="page active">
-            <section class="hero">
-                <h2>Xoş gəlmisiniz!</h2>
-                <p>Geniş çeşid və sərfəli qiymətlər</p>
-                <a href="#" class="btn show-catalog">Kataloga bax</a>
-            </section>
-        </div>
-        
-        <!-- Каталог -->
-        <div id="catalog" class="page">
-            <h2>Akkumulyator Kataloqu</h2>
-            <div class="product-grid">
-                <!-- Товары будут добавляться через JavaScript -->
-            </div>
-        </div>
-        
-        <!-- Подбор по авто -->
-        <div id="selection" class="page">
-            <h2>Avtomobilə görə seçim</h2>
-            <div class="car-selection">
-                <div class="form-group">
-                    <label for="car-brand">Avtomobil markası:</label>
-                    <select id="car-brand">
-                        <option value="">Seçin</option>
-                        <option value="bmw">BMW</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
-                        <option value="toyota">Toyota</option>
-                    </select>
+        <div class="main-content">
+            <!-- Left Column - Batteries -->
+            <div class="left-column">
+                <!-- Top Batteries Section -->
+                <div class="section">
+                    <div class="section-title">
+                        <i class="fas fa-bolt"></i>
+                        <h2>Top Batteries</h2>
+                    </div>
+                    
+                    <div class="battery-grid">
+                        <!-- Battery 1 -->
+                        <div class="battery-item">
+                            <div class="battery-img">
+                                BLU<br>POLAR<br>L3B75P
+                            </div>
+                            <div class="battery-name">BLU POLAR L3B75P</div>
+                            <div class="battery-specs">
+                                <div class="spec-item">
+                                    <i class="fas fa-bolt"></i> 12V
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fas fa-car-battery"></i> 75Ah
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fas fa-tachometer-alt"></i> 700A
+                                </div>
+                            </div>
+                            <div class="battery-price">223.40</div>
+                            <div class="battery-actions">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-shopping-cart"></i> Add to cart
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-info"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Battery 2 -->
+                        <div class="battery-item">
+                            <div class="battery-img">
+                                BLO<br>POLAR<br>L5100P
+                            </div>
+                            <div class="battery-name">BLO POLAR L5100P</div>
+                            <div class="battery-specs">
+                                <div class="spec-item">
+                                    <i class="fas fa-bolt"></i> 12V
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fas fa-car-battery"></i> 100Ah
+                                </div>
+                                <div class="spec-item">
+                                    <i class="fas fa-tachometer-alt"></i> 950A
+                                </div>
+                            </div>
+                            <div class="battery-price">230.00</div>
+                            <div class="battery-actions">
+                                <button class="btn btn-primary">
+                                    <i class="fas fa-shopping-cart"></i> Add to cart
+                                </button>
+                                <button class="btn btn-secondary">
+                                    <i class="fas fa-info"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="car-model">Model:</label>
-                    <select id="car-model" disabled>
-                        <option value="">Əvvəlcə marka seçin</option>
-                    </select>
+                
+                <!-- Second Batteries Section -->
+                <div class="section">
+                    <div class="section-title">
+                        <i class="fas fa-star"></i>
+                        <h2>Top Batteries</h2>
+                    </div>
+                    
+                    <table class="spec-table">
+                        <tr>
+                            <th>Модель</th>
+                            <th>Напряжение</th>
+                            <th>Емкость</th>
+                            <th>Цена</th>
+                        </tr>
+                        <tr>
+                            <td>Impulse 70AH</td>
+                            <td>12V</td>
+                            <td>70Ah</td>
+                            <td>199.99 €</td>
+                        </tr>
+                        <tr>
+                            <td>Impulse 62AH</td>
+                            <td>12V</td>
+                            <td>62Ah</td>
+                            <td>189.99 €</td>
+                        </tr>
+                        <tr>
+                            <td>PROFI 16 110</td>
+                            <td>12V</td>
+                            <td>110Ah</td>
+                            <td>240.00 €</td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="form-group">
-                    <label for="car-year">Buraxılış ili:</label>
-                    <select id="car-year" disabled>
-                        <option value="">Əvvəlcə model seçin</option>
-                    </select>
+                
+                <!-- About Us Section -->
+                <div class="section">
+                    <div class="section-title">
+                        <i class="fas fa-building"></i>
+                        <h2>About us</h2>
+                    </div>
+                    
+                    <p style="margin-bottom: 20px; line-height: 1.7;">
+                        Veed bereheolle - ведущий поставщик аккумуляторов премиум-класса с 2010 года. 
+                        Наша миссия - обеспечить клиентов надежными и долговечными решениями для энергоснабжения.
+                    </p>
+                    
+                    <div class="battery-specs">
+                        <div class="spec-item">
+                            <i class="fas fa-car"></i> 11.000 авто
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-calendar"></i> Основан в 1920
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-clock"></i> 3:9
+                        </div>
+                    </div>
                 </div>
-                <button class="btn find-battery">Akkumulyator tap</button>
             </div>
-        </div>
-        
-        <!-- Доставка -->
-        <div id="delivery" class="page">
-            <h2>Çatdırılma şərtləri</h2>
-            <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                <p><strong>Bakı şəhəri daxilində:</strong> Pulsuz çatdırılma (24 saat ərzində)</p>
-                <p><strong>Regionlara çatdırılma:</strong> 2-3 iş günü ərzində (qiymət müraciət zamanı bildirilir)</p>
-                <p><strong>Ödəniş:</strong> Nağd və ya kartla (çatdırılma zamanı)</p>
-            </div>
-        </div>
-        
-        <!-- Контакты -->
-        <div id="contact" class="page">
-            <h2>Əlaqə</h2>
-            <div style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.1);">
-                <p><strong>Ünvan:</strong> Bakı şəhəri, Nəsimi rayonu, Füzuli küçəsi 23</p>
-                <p><strong>Telefon:</strong> +994 12 345 67 89</p>
-                <p><strong>İş saatları:</strong> Hər gün 09:00 - 20:00</p>
-                <p><strong>Email:</strong> info@akkumulator.az</p>
+            
+            <!-- Right Column - Sidebar -->
+            <div class="sidebar">
+                <!-- AI Assistant -->
+                <div class="ai-assistant">
+                    <div class="ai-header">
+                        <div class="ai-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="ai-title">
+                            <h3>Need help?</h3>
+                            <p>Ask our AI assistant</p>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-conversation" id="ai-conversation">
+                        <div class="message ai-message">
+                            Здравствуйте! Я ваш помощник по выбору аккумуляторов. На каком языке вам удобнее общаться?
+                        </div>
+                        <div class="message ai-message">
+                            Salam! Batareya seçiminizdə sizə kömək edəcək assistentəm. Hansı dildə danışmaq sizin üçün daha rahatdır?
+                        </div>
+                    </div>
+                    
+                    <div class="lang-toggle">
+                        <button class="lang-btn active" id="lang-ru">Русский</button>
+                        <button class="lang-btn" id="lang-az">Azərbaycanca</button>
+                    </div>
+                    
+                    <div class="ai-input-group">
+                        <input type="text" class="ai-input" id="ai-input" placeholder="Задайте ваш вопрос...">
+                        <button class="ai-send" id="ai-send">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Shipping & Returns -->
+                <div class="section">
+                    <div class="section-title">
+                        <i class="fas fa-truck"></i>
+                        <h2>Shipping & Returns</h2>
+                    </div>
+                    
+                    <p style="margin-bottom: 15px;">
+                        Caed Heck Reindles - быстрая и надежная доставка по всему региону. 
+                        Бесплатный возврат в течение 14 дней.
+                    </p>
+                    
+                    <div class="battery-specs">
+                        <div class="spec-item">
+                            <i class="fas fa-car"></i> 12.000 авто
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-calendar"></i> До 2200
+                        </div>
+                        <div class="spec-item">
+                            <i class="fas fa-clock"></i> 3:3
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Terms of Service -->
+                <div class="section">
+                    <div class="section-title">
+                        <i class="fas fa-file-contract"></i>
+                        <h2>Terms of Service</h2>
+                    </div>
+                    
+                    <p style="line-height: 1.7;">
+                        Veed Vormlvlleer vllmalle - наши условия обслуживания обеспечивают 
+                        прозрачность и защиту прав клиентов. Гарантия на все продукты 24 месяца.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-    
+
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>© 2023 Akkumulyator Mağazası. Bütün hüquqlar qorunur.</p>
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>О компании</h3>
+                    <ul>
+                        <li><a href="#">История компании</a></li>
+                        <li><a href="#">Наша миссия</a></li>
+                        <li><a href="#">Команда</a></li>
+                        <li><a href="#">Вакансии</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Категории</h3>
+                    <ul>
+                        <li><a href="#">Автомобильные</a></li>
+                        <li><a href="#">Мотоциклетные</a></li>
+                        <li><a href="#">Для водного транспорта</a></li>
+                        <li><a href="#">Промышленные</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Помощь</h3>
+                    <ul>
+                        <li><a href="#">Как выбрать аккумулятор</a></li>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат товара</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul>
+                        <li><i class="fas fa-map-marker-alt"></i> Баку, пр. Нефтчиляр 45</li>
+                        <li><i class="fas fa-phone"></i> +994 12 345 67 89</li>
+                        <li><i class="fas fa-envelope"></i> info@batterypro.az</li>
+                        <li><i class="fas fa-clock"></i> Пн-Сб: 9:00 - 19:00</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 BatteryPro. Все права защищены. 
+            </div>
         </div>
     </footer>
 
     <script>
-        // Данные товаров
-        const products = [
-            {
-                id: 1,
-                name: "VARTA Blue Dynamic",
-                image: "https://via.placeholder.com/300x200?text=VARTA+60Ah",
-                capacity: "60Ah",
-                current: "540A",
-                dimensions: "242x175x190mm",
-                price: 179
+        // ИИ-ассистент
+        const aiConversation = document.getElementById('ai-conversation');
+        const aiInput = document.getElementById('ai-input');
+        const aiSend = document.getElementById('ai-send');
+        const langRu = document.getElementById('lang-ru');
+        const langAz = document.getElementById('lang-az');
+        
+        let currentLang = 'ru';
+        
+        // База знаний для ИИ-ассистента
+        const aiResponses = {
+            ru: {
+                "привет": "Здравствуйте! Чем могу помочь с выбором аккумулятора?",
+                "доставка": "Доставка осуществляется по всей стране в течение 1-3 рабочих дней. Стоимость доставки зависит от региона.",
+                "гарантия": "На все аккумуляторы предоставляется гарантия 12 месяца. В случае неисправности вы можете вернуть товар.",
+                "выбор": "Чтобы подобрать аккумулятор, укажите марку, модель и год выпуска вашего автомобиля.",
+                "оплата": "Мы принимаем оплату картами Visa/Mastercard, наличными при получении и банковским переводом.",
+                "благодарю": "Пожалуйста! Если у вас возникнут дополнительные вопросы, обращайтесь в любое время.",
+                "аккумулятор": "У нас есть широкий выбор аккумуляторов для различных типов транспортных средств. Какой тип вас интересует?",
+                "цена": "Цены на наши аккумуляторы начинаются от 150 €. Конкретную стоимость вы можете увидеть в каталоге.",
+                "default": "Извините, я не понял вопрос. Можете переформулировать? Я помогу подобрать аккумулятор или ответить на вопросы о доставке и гарантии."
             },
-            {
-                id: 2,
-                name: "BOSCH S4",
-                image: "https://via.placeholder.com/300x200?text=BOSCH+72Ah",
-                capacity: "72Ah",
-                current: "680A",
-                dimensions: "278x175x190mm",
-                price: 210
-            },
-            {
-                id: 3,
-                name: "Mutlu Silver",
-                image: "https://via.placeholder.com/300x200?text=Mutlu+65Ah",
-                capacity: "65Ah",
-                current: "600A",
-                dimensions: "242x175x190mm",
-                price: 150
+            az: {
+                "salam": "Salam! Batareya seçiminizdə sizə necə kömək edə bilərəm?",
+                "çatdırılma": "Çatdırılma bütün ölkə üzrə 1-3 iş günü ərzində həyata keçirilir. Çatdırılma qiyməti regiondan asılıdır.",
+                "zəmanət": "Bütün batareyalara 12 ay zəmanət verilir. Nasazlıq halında məhsulu qaytara bilərsiniz.",
+                "seçim": "Batareya seçmək üçün avtomobilinizin markasını, modelini və buraxılış ilini göstərin.",
+                "ödəniş": "Biz Visa/Mastercard kartları ilə, əldə alarkən nağd pul və bank köçürməsi ilə ödənişi qəbul edirik.",
+                "təşəkkür": "Xahiş edirəm! Əlavə suallarınız yaranarsa, istənilən vaxt müraciət edə bilərsiniz.",
+                "batareya": "Müxtəlif nəqliyyat vasitələri üçün geniş batareya seçimimiz var. Hansı növ sizi maraqlandırır?",
+                "qiymət": "Batareyalarımızın qiyməti 150 €-dan başlayır. Dəqiq qiyməti kataloqda görə bilərsiniz.",
+                "default": "Bağışlayın, sualı başa düşmədim. Yenidən ifadə edə bilərsiniz? Batareya seçimi və ya çatdırılma, zəmanət ilə bağlı suallarınıza cavab verməkdə kömək edə bilərəm."
             }
-        ];
-
-        // Модели автомобилей
-        const carModels = {
-            bmw: ["3 Seriyası", "5 Seriyası", "X5"],
-            mercedes: ["C-klass", "E-klass", "GLC"],
-            audi: ["A4", "A6", "Q5"],
-            toyota: ["Camry", "Corolla", "RAV4"]
         };
-
-        // Годы выпуска
-        const carYears = ["2020-2023", "2015-2019", "2010-2014", "2005-2009"];
-
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            // Загрузка товаров
-            loadProducts();
-            // Меню для мобильных
-            setupMobileMenu();
-            
-            // Навигация по страницам
-            setupNavigation();
-            
-            // Подбор по авто
-            setupCarSelection();
-            
-            // Кнопка "В корзину"
-            setupAddToCart();
-            
-            // Кнопка "Каталог" на главной
-            setupCatalogButton();
+        
+        // Переключение языка
+        langRu.addEventListener('click', () => {
+            currentLang = 'ru';
+            langRu.classList.add('active');
+            langAz.classList.remove('active');
+            aiInput.placeholder = "Задайте ваш вопрос...";
         });
-
-        // Загрузка товаров в каталог
-        function loadProducts() {
-            const productGrid = document.querySelector('.product-grid');
+        
+        langAz.addEventListener('click', () => {
+            currentLang = 'az';
+            langAz.classList.add('active');
+            langRu.classList.remove('active');
+            aiInput.placeholder = "Sualınızı verin...";
+        });
+        
+        // Отправка сообщения
+        function sendMessage() {
+            const message = aiInput.value.trim();
+            if (message === '') return;
             
-            if (productGrid) {
-                productGrid.innerHTML = '';
+            // Добавление сообщения пользователя
+            const userMessage = document.createElement('div');
+            userMessage.classList.add('message', 'user-message');
+            userMessage.textContent = message;
+            aiConversation.appendChild(userMessage);
+            
+            // Очистка поля ввода
+            aiInput.value = '';
+            
+            // Прокрутка вниз
+            aiConversation.scrollTop = aiConversation.scrollHeight;
+            
+            // Имитация ответа ИИ с задержкой
+            setTimeout(() => {
+                let response = aiResponses[currentLang]['default'];
+                const lowerMessage = message.toLowerCase();
                 
-                products.forEach(product => {
-                    productGrid.innerHTML += 
-                        <div class="product-card">
-                            <img src="${product.image}" alt="${product.name}" class="product-image">
-                            <div class="product-info">
-                                <h3 class="product-title">${product.name}</h3>
-                                <div class="product-specs">
-                                    <p><strong>Güc:</strong> ${product.capacity}</p>
-                                    <p><strong>Başlatma cərəyanı:</strong> ${product.current}</p>
-                                    <p><strong>Ölçülər:</strong> ${product.dimensions}</p>
-                                </div>
-                                <div class="product-price">$${product.price}</div>
-                                <button class="btn add-to-cart" data-id="${product.id}">Səbətə əlavə et</button>
-                            </div>
-                        </div>
-                    ;
-                });
-            }
-        }
-
-        // Мобильное меню
-        function setupMobileMenu() {
-            const menuToggle = document.querySelector('.menu-toggle');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            if (menuToggle && navMenu) {
-                menuToggle.addEventListener('click', function() {
-                    navMenu.classList.toggle('active');
-                });
-            }
-        }
-
-        // Навигация по страницам
-        function setupNavigation() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const pages = document.querySelectorAll('.page');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    
-                    // Удаляем активный класс у всех ссылок
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    // Добавляем активный класс текущей ссылке
-                    this.classList.add('active');
-                    
-                    // Скрываем все страницы
-                    pages.forEach(page => page.classList.remove('active'));
-                    // Показываем нужную страницу
-                    const pageId = this.getAttribute('data-page');
-                    document.getElementById(pageId).classList.add('active');
-                    
-                    // Закрываем меню на мобильных
-                    if (navMenu) navMenu.classList.remove('active');
-                });
-            });
-        }
-
-        // Подбор по авто
-        function setupCarSelection() {
-            const carBrand = document.getElementById('car-brand');
-            const carModel = document.getElementById('car-model');
-            const carYear = document.getElementById('car-year');
-            const findBtn = document.querySelector('.find-battery');
-            
-            if (carBrand) {
-                carBrand.addEventListener('change', function() {
-                    if (this.value) {
-                        carModel.innerHTML = '<option value="">Model seçin</option>';
-                        carModels[this.value].forEach(model => {
-                            carModel.innerHTML += <option value="${model}">${model}</option>;
-                        });
-                        carModel.disabled = false;
-                    } else {
-                        carModel.innerHTML = '<option value="">Əvvəlcə marka seçin</option>';
-                        carModel.disabled = true;
-                        carYear.disabled = true;
+                // Поиск подходящего ответа
+                for (const key in aiResponses[currentLang]) {
+                    if (lowerMessage.includes(key)) {
+                        response = aiResponses[currentLang][key];
+                        break;
                     }
-                    carYear.innerHTML = '<option value="">Əvvəlcə model seçin</option>';
-                });
-                
-                carModel.addEventListener('change', function() {
-                    if (this.value) {
-                        carYear.innerHTML = '';
-                        carYears.forEach(year => {
-                            carYear.innerHTML += <option value="${year}">${year}</option>;
-                        });
-                        carYear.disabled = false;
-                    } else {
-                        carYear.innerHTML = '<option value="">Əvvəlcə model seçin</option>';
-                        carYear.disabled = true;
-                    }
-                });
-                
-                findBtn.addEventListener('click', function() {
-                    if (carBrand.value && carModel.value && carYear.value) {
-                        alert('Uyğun akkumulyatorlar tapıldı! Kataloq bölməsinə yönləndirilirsiniz.');
-                        document.querySelector('[data-page="catalog"]').click();
-                    } else {
-                        alert('Zəhmət olmasa bütün sahələri doldurun!');
-                    }
-                });
-            }
-        }
-
-        // Кнопка "В корзину"
-        function setupAddToCart() {
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('add-to-cart')) {
-                    const productId = e.target.getAttribute('data-id');
-                    const product = products.find(p => p.id == productId);
-                    alert(${product.name} səbətə əlavə edildi!\nQiymət: $${product.price});
                 }
-            });
+                // Добавление ответа ИИ
+                const aiMessage = document.createElement('div');
+                aiMessage.classList.add('message', 'ai-message');
+                aiMessage.textContent = response;
+                aiConversation.appendChild(aiMessage);
+                
+                // Прокрутка вниз
+                aiConversation.scrollTop = aiConversation.scrollHeight;
+            }, 1000);
         }
-
-        // Кнопка "Каталог" на главной
-        function setupCatalogButton() {
-            const showCatalogBtn = document.querySelector('.show-catalog');
-            if (showCatalogBtn) {
-                showCatalogBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    document.querySelector('[data-page="catalog"]').click();
-                });
+        
+        // Обработчики событий
+        aiSend.addEventListener('click', sendMessage);
+        
+        aiInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
             }
-        }
+        });
+        
+        // Инициализация приветственных сообщений
+        setTimeout(() => {
+            const welcomeRu = document.createElement('div');
+            welcomeRu.classList.add('message', 'ai-message');
+            welcomeRu.textContent = "Чем могу помочь? Вы можете спросить о доставке, гарантии или помощи в выборе аккумулятора.";
+            aiConversation.appendChild(welcomeRu);
+            
+            const welcomeAz = document.createElement('div');
+            welcomeAz.classList.add('message', 'ai-message');
+            welcomeAz.textContent = "Necə kömək edə bilərəm? Çatdırılma, zəmanət və ya batareya seçimi ilə bağlı sual verə bilərsiniz.";
+            aiConversation.appendChild(welcomeAz);
+            
+            aiConversation.scrollTop = aiConversation.scrollHeight;
+        }, 1500);
     </script>
 </body>
 </html>
