@@ -805,6 +805,51 @@
             color: #bbb;
         }
         
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 1px solid var(--secondary);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .filter-btn.active {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .filter-btn:hover:not(.active) {
+            background: #e3f2fd;
+        }
+        
+        /* Product Category Notice */
+        .category-notice {
+            background: #fff8e1;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .category-notice i {
+            font-size: 24px;
+            color: #ffc107;
+        }
+        
         /* Responsive Design */
         @media (max-width: 992px) {
             .products-grid {
@@ -886,6 +931,11 @@
             .lang-btn {
                 width: 100%;
                 text-align: center;
+            }
+            
+            .category-filters {
+                flex-direction: column;
+                align-items: center;
             }
         }
         
@@ -996,10 +1046,10 @@
                         <li class="dropdown">
                             <a href="#" class="nav-link" data-page="products"><i class="fas fa-car-battery"></i> Товары <i class="fas fa-chevron-down"></i></a>
                             <div class="dropdown-content">
-                                <a href="#" class="nav-link" data-page="products">Автомобильные</a>
-                                <a href="#" class="nav-link" data-page="products">Мотоциклетные</a>
-                                <a href="#" class="nav-link" data-page="products">Для лодок</a>
-                                <a href="#" class="nav-link" data-page="products">Промышленные</a>
+                                <a href="#" class="nav-link" data-page="products" data-category="car">Автомобильные</a>
+                                <a href="#" class="nav-link" data-page="products" data-category="motorcycle">Мотоциклетные</a>
+                                <a href="#" class="nav-link" data-page="products" data-category="boat">Для лодок</a>
+                                <a href="#" class="nav-link" data-page="products" data-category="industrial">Промышленные</a>
                             </div>
                         </li>
                         <li><a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> О нас</a></li>
@@ -1112,154 +1162,16 @@
                 <p>Широкий выбор аккумуляторов для любых транспортных средств</p>
             </div>
             
-            <div class="products-grid">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <div class="product-badge">Топ продаж</div>
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1603732551681-2e91159b9dc2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BLU POLAR L3B75P">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">BLU POLAR L3B75P</h3>
-                        <div class="product-specs">
-                            <span class="spec-item">12V</span>
-                            <span class="spec-item">75Ah</span>
-                            <span class="spec-item">700A</span>
-                        </div>
-                        <div class="product-price">180.00</div>
-                        <div class="product-actions">
-                            <button class="btn-cart">
-                                <i class="fas fa-shopping-cart"></i> В корзину
-                            </button>
-                            <button class="btn-cart">
-                                <i class="fas fa-info"></i>
-                            </button>
-                        </div>
-                    </div>
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="all">Все</button>
+                <button class="filter-btn" data-category="car">Автомобильные</button>
+                <button class="filter-btn" data-category="motorcycle">Мотоциклетные</button>
+                <button class="filter-btn" data-category="boat">Для лодок</button>
+                <button class="filter-btn" data-category="industrial">Промышленные</button>
                 </div>
-                
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <div class="product-badge">Новинка</div>
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BLO POLAR L5100P">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">BLO POLAR L5100P</h3>
-                        <div class="product-specs">
-                            <span class="spec-item">12V</span>
-                            <span class="spec-item">100Ah</span>
-                            <span class="spec-item">950A</span>
-                        </div>
-                        <div class="product-price">210.00</div>
-                        <div class="product-actions">
-                            <button class="btn-cart">
-                                <i class="fas fa-shopping-cart"></i> В корзину
-                            </button>
-                            <button class="btn-cart">
-                                <i class="fas fa-info"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <div class="product-badge">Выбор механиков</div>
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1603739903239-8b6e64c3b185?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="PROFI 16 110">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">PROFI 16 110</h3>
-                        <div class="product-specs">
-                            <span class="spec-item">12V</span>
-                            <span class="spec-item">110Ah</span>
-                            <span class="spec-item">950A</span>
-                        </div>
-                        <div class="product-price">230.00</div>
-                        <div class="product-actions">
-                            <button class="btn-cart">
-                                <i class="fas fa-shopping-cart"></i> В корзину
-                            </button>
-                            <button class="btn-cart">
-                                <i class="fas fa-info"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1626804475297-41608ea09aeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="PROFI 88888">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">PROFI 88888</h3>
-                        <div class="product-specs">
-                            <span class="spec-item">12V</span>
-                            <span class="spec-item">100Ah</span>
-                            <span class="spec-item">850A</span>
-                        </div>
-                        <div class="product-price">200.00</div>
-                        <div class="product-actions">
-                            <button class="btn-cart">
-                                <i class="fas fa-shopping-cart"></i> В корзину
-                            </button>
-                            <button class="btn-cart">
-                                <i class="fas fa-info"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product 5 -->
-                <div class="product-card">
-                    <div class="product-badge">Акция</div>
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1621370277760-4f5e6c392e76?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="GOLD POWER 65">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">GOLD POWER 65</h3>
-                        <div class="product-specs">
-                            <span class="spec-item">12V</span>
-                            <span class="spec-item">65Ah</span>
-                            <span class="spec-item">600A</span>
-                        </div>
-                        <div class="product-price">150.00</div>
-                        <div class="product-actions">
-                            <button class="btn-cart">
-                                <i class="fas fa-shopping-cart"></i> В корзину
-                            </button>
-                            <button class="btn-cart">
-                                <i class="fas fa-info"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Product 6 -->
-                <div class="product-card">
-                    <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1621370277760-4f5e6c392e76?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="ULTRA PRO 120">
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name">ULTRA PRO 120</h3>
-                        <div class="product-specs">
-                            <span class="spec-item">12V</span>
-                            <span class="spec-item">120Ah</span>
-                            <span class="spec-item">1000A</span>
-                        </div>
-                        <div class="product-price">250.00</div>
-                        <div class="product-actions">
-                            <button class="btn-cart">
-                                <i class="fas fa-shopping-cart"></i> В корзину
-                            </button>
-                            <button class="btn-cart">
-                                <i class="fas fa-info"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            
+            <div id="products-container" class="products-grid">
+                <!-- Products will be loaded dynamically -->
             </div>
             
             <div class="upload-container">
@@ -1370,6 +1282,7 @@
                     <li>Наличие товарного чека</li>
                 </ul>
                 <p>Для возврата обратитесь в любой из наших магазинов или свяжитесь с нашим call-центром.</p>
+                
                 <h3>Самовывоз</h3>
                 <p>Вы также можете забрать заказ самостоятельно в одном из наших магазинов:</p>
                 <ul>
@@ -1409,71 +1322,7 @@
                 
                 <div class="lang-toggle">
                     <button class="lang-btn active" id="lang-ru">Русский</button>
-                    <button class="lang-btn" id="lang-az">Azərbaycanca</button>
-                </div>
-                
-                <div class="ai-input-group">
-                    <input type="text" class="ai-input" id="ai-input" placeholder="Задайте ваш вопрос...">
-                    <button class="ai-send" id="ai-send">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-            
-            <div style="background: white; border-radius: var(--border-radius); padding: 25px; margin-top: 30px; box-shadow: var(--shadow);">
-                <h3 style="color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
-                    <i class="fas fa-question-circle"></i> Часто задаваемые вопросы
-                </h3>
-                <div class="faq-grid">
-                    <div class="faq-item">
-                        <h4><i class="fas fa-car"></i> Как выбрать аккумулятор?</h4>
-                        <p>Учитывайте марку и модель автомобиля, объем двигателя, тип коробки передач и климатические условия вашего региона.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h4><i class="fas fa-clock"></i> Сколько служит аккумулятор?</h4>
-                        <p>Средний срок службы аккумулятора 3-5 лет, но зависит от условий эксплуатации и качества зарядки.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h4><i class="fas fa-bolt"></i> Как проверить состояние аккумулятора?</h4>
-                        <p>Используйте мультиметр для измерения напряжения. Полностью заряженный аккумулятор должен показывать 12.6-12.7В.</p>
-                    </div>
-                    <div class="faq-item">
-                        <h4><i class="fas fa-snowflake"></i> Как подготовить аккумулятор к зиме?</h4>
-                        <p>Проверьте уровень заряда, очистите клеммы, при необходимости зарядите аккумулятор и утеплите его специальным чехлом.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h3>Магазин</h3>
-                    <ul>
-                        <li><a href="#" class="nav-link" data-page="products"><i class="fas fa-car-battery"></i> Товары</a></li>
-                        <li><a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> О нас</a></li>
-                        <li><a href="#" class="nav-link" data-page="delivery"><i class="fas fa-truck"></i> Доставка</a></li>
-                        <li><a href="#" class="nav-link" data-page="ai"><i class="fas fa-robot"></i> ИИ-помощник</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Категории</h3>
-                    <ul>
-                        <li><a href="#"><i class="fas fa-car"></i> Автомобильные</a></li>
-                        <li><a href="#"><i class="fas fa-motorcycle"></i> Мотоциклетные</a></li>
-                        <li><a href="#"><i class="fas fa-ship"></i> Для лодок</a></li>
-                        <li><a href="#"><i class="fas fa-industry"></i> Промышленные</a></li>
-                    </ul>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Контакты</h3>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> Баку, пр. Нефтчиляр 123</li>
-                        <li><i class="fas fa-phone"></i> +994 12 345 67 89</li>
+                    <li><i class="fas fa-phone"></i> +994 12 345 67 89</li>
                         <li><i class="fas fa-envelope"></i> info@batterypro.az</li>
                         <li><i class="fas fa-clock"></i> Пн-Сб: 9:00-19:00</li>
                     </ul>
@@ -1523,12 +1372,22 @@
                 
                 // Прокрутка вверх
                 window.scrollTo(0, 0);
+                
+                // Если это страница товаров с категорией
+                const category = link.getAttribute('data-category');
+                if (category && pageId === 'products-page') {
+                    setTimeout(() => {
+                        filterProducts(category);
+                        setActiveFilter(category);
+                    }, 100);
+                }
             });
         });
         
         // Мобильное меню
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
+        
         mobileToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
         });
@@ -1555,6 +1414,9 @@
                 "цена": "Цены на наши аккумуляторы начинаются от 140 ₼. Конкретную стоимость вы можете увидеть в каталоге.",
                 "зима": "Для зимы рекомендую аккумуляторы с увеличенным пусковым током. Например, BLU POLAR L3B75P или PROFI 16 110.",
                 "емкость": "Емкость аккумулятора должна соответствовать рекомендациям производителя вашего автомобиля. Обычно для легковых авто это 55-70 Ач.",
+                "замена": "Рекомендуемая периодичность замены аккумулятора - каждые 3-5 лет, но это зависит от условий эксплуатации.",
+                "уход": "Для продления срока службы аккумулятора: регулярно очищайте клеммы, избегайте глубокого разряда, проверяйте уровень электролита.",
+                "марка": "Мы предлагаем аккумуляторы ведущих брендов: BLU, BLO, PROFI, GOLD POWER и другие. Все бренды имеют гарантию качества.",
                 "default": "Извините, я не понял вопрос. Можете переформулировать? Я помогу подобрать аккумулятор или ответить на вопросы о доставке и гарантии."
             },
             az: {
@@ -1568,6 +1430,9 @@
                 "qiymət": "Batareyalarımızın qiyməti 140 ₼-dan başlayır. Dəqiq qiyməti kataloqda görə bilərsiniz.",
                 "qış": "Qış üçün artırılmış başlanğıc cərəyanı olan batareyaları məsləhət görürəm. Məsələn, BLU POLAR L3B75P və ya PROFI 16 110.",
                 "tutum": "Batareyanın tutumu avtomobilinizin istehsalçısının tövsiyələrinə uyğun olmalıdır. Adətən yüngül avtomobillər üçün bu 55-70 Ah-dır.",
+                "dəyişdirmə": "Batareyanın dəyişdirilməsi üçün tövsiyə olunan müddət hər 3-5 ildir, lakin bu istismar şərtlərindən asılıdır.",
+                "qulluq": "Batareyanın ömrünü uzatmaq üçün: terminalları müntəzəm təmizləyin, dərin boşalmağa yol verməyin, elektrolit səviyyəsini yoxlayın.",
+                "marka": "Biz aparıcı markaların batareyalarını təklif edirik: BLU, BLO, PROFI, GOLD POWER və digərləri. Bütün markalar keyfiyyət zəmanəti ilə təmin olunur.",
                 "default": "Bağışlayın, sualı başa düşmədim. Yenidən ifadə edə bilərsiniz? Batareya seçimi və ya çatdırılma, zəmanət ilə bağlı suallarınıza cavab verməkdə kömək edə bilərəm."
             }
         };
@@ -1578,7 +1443,7 @@
             langRu.classList.add('active');
             langAz.classList.remove('active');
             aiInput.placeholder = "Задайте ваш вопрос...";
-            });
+        });
         
         langAz.addEventListener('click', () => {
             currentLang = 'az';
@@ -1673,7 +1538,7 @@
                 reader.onload = function(e) {
                     uploadPreview.src = e.target.result;
                     uploadPreview.style.display = 'block';
-                    }
+                }
                 
                 reader.readAsDataURL(this.files[0]);
                 
@@ -1693,7 +1558,7 @@
         // Drag and drop для загрузки изображений
         uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
-            uploadArea.style.borderColor = var(--secondary);
+            uploadArea.style.borderColor = 'var(--secondary)';
             uploadArea.style.backgroundColor = '#f0f8ff';
         });
         
@@ -1730,6 +1595,194 @@
                     aiConversation.scrollTop = aiConversation.scrollHeight;
                 }, 1000);
             }
+        });
+        
+        // Фильтрация товаров по категориям
+        const productsContainer = document.getElementById('products-container');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const filterLinks = document.querySelectorAll('.filter-link');
+        
+        // Данные о товарах
+        const products = [
+            {
+                id: 1,
+                name: "BLU POLAR L3B75P",
+                category: "car",
+                price: 180.00,
+                specs: ["12V", "75Ah", "700A"],
+                badge: "Топ продаж",
+                img: "https://images.unsplash.com/photo-1603732551681-2e91159b9dc2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 2,
+                name: "BLO POLAR L5100P",
+                category: "car",
+                price: 210.00,
+                specs: ["12V", "100Ah", "950A"],
+                badge: "Новинка",
+                img: "https://images.unsplash.com/photo-1585060544812-6b45742d762f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 3,
+                name: "PROFI 16 110",
+                category: "car",
+                price: 230.00,
+                specs: ["12V", "110Ah", "950A"],
+                badge: "Выбор механиков",
+                img: "https://images.unsplash.com/photo-1603739903239-8b6e64c3b185?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 4,
+                name: "PROFI 88888",
+                category: "car",
+                price: 200.00,
+                specs: ["12V", "100Ah", "850A"],
+                img: "https://images.unsplash.com/photo-1626804475297-41608ea09aeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 5,
+                name: "GOLD POWER 65",
+                category: "car",
+                price: 150.00,
+                specs: ["12V", "65Ah", "600A"],
+                badge: "Акция",
+                img: "https://images.unsplash.com/photo-1621370277760-4f5e6c392e76?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 6,
+                name: "ULTRA PRO 120",
+                category: "car",
+                price: 250.00,
+                specs: ["12V", "120Ah", "1000A"],
+                img: "https://images.unsplash.com/photo-1621370277760-4f5e6c392e76?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 7,
+                name: "MOTOR POWER M6",
+                category: "motorcycle",
+                price: 90.00,
+                specs: ["12V", "9Ah", "150A"],
+                badge: "Новинка",
+                img: "https://images.unsplash.com/photo-1568772585408-946b722dc1d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 8,
+                name: "BOAT POWER B12",
+                category: "boat",
+                price: 280.00,
+                specs: ["12V", "120Ah", "800A"],
+                badge: "Спецпредложение",
+                img: "https://images.unsplash.com/photo-1563014959-7aaa83350992?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            },
+            {
+                id: 9,
+                name: "INDUSTRIAL PRO 200",
+                category: "industrial",
+                price: 450.00,
+                specs: ["24V", "200Ah", "1200A"],
+                img: "https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            }
+        ];
+        
+        // Отображение товаров
+        function renderProducts(category = 'all') {
+            productsContainer.innerHTML = '';
+            
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(product => product.category === category);
+            
+            if (filteredProducts.length === 0) {
+                productsContainer.innerHTML = 
+                    <div class="category-notice">
+                        <i class="fas fa-tools"></i>
+                        <div>
+                            <h3>Категория в разработке</h3>
+                            <p>Извините, раздел находится в стадии разработки. Скоро здесь появятся новые товары!</p>
+                        </div>
+                    </div>
+                ;
+                return;
+            }
+            
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card';
+                
+                productCard.innerHTML = 
+                    ${product.badge ? <div class="product-badge">${product.badge}</div> : ''}
+                    <div class="product-img">
+                        <img src="${product.img}" alt="${product.name}">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="product-specs">
+                            ${product.specs.map(spec => <span class="spec-item">${spec}</span>`).join('')}
+                        </div>
+                        <div class="product-price">${product.price.toFixed(2)}</div>
+                        <div class="product-actions">
+                    <button class="btn-cart">
+                                <i class="fas fa-shopping-cart"></i> В корзину
+                            </button>
+                            <button class="btn-cart">
+                                <i class="fas fa-info"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                productsContainer.appendChild(productCard);
+            });
+        }
+        
+        // Установка активного фильтра
+        function setActiveFilter(category) {
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        
+        // Фильтрация товаров
+        function filterProducts(category) {
+            renderProducts(category);
+            setActiveFilter(category);
+        }
+        
+        // Инициализация страницы товаров
+        filterButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterProducts(btn.dataset.category);
+            });
+        });
+        
+        filterLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const category = link.dataset.category;
+                filterProducts(category);
+                
+                // Переход на страницу товаров
+                pages.forEach(page => page.classList.remove('active'));
+                document.getElementById('products-page').classList.add('active');
+                
+                // Обновление навигации
+                navLinks.forEach(item => item.classList.remove('active'));
+                document.querySelector('[data-page="products"]').classList.add('active');
+            });
+        });
+        
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProducts('all');
+            
+            // Обработка кнопки "Смотреть каталог" на главной
+            document.querySelector('[data-page="products"]').addEventListener('click', () => {
+                renderProducts('all');
+                setActiveFilter('all');
+            });
         });
     </script>
 </body>
