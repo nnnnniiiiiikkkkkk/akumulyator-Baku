@@ -147,69 +147,44 @@
             font-weight: bold;
         }
         
-        /* Dropdown Menu */
-        .dropdown {
-            position: relative;
+        .language-toggle {
+            display: flex;
+            gap: 10px;
         }
         
-        .dropdown-content {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: white;
-            min-width: 220px;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            padding: 10px 0;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: var(--transition);
-            z-index: 200;
-        }
-        
-        .dropdown:hover .dropdown-content {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-        
-        .dropdown-content a {
-            color: var(--dark);
-            padding: 10px 20px;
-            display: block;
-            border-radius: 0;
+        .lang-btn {
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
             transition: var(--transition);
         }
         
-        .dropdown-content a:hover {
-            background: #f5f7fa;
-            color: var(--secondary);
-            padding-left: 25px;
+        .lang-btn.active {
+            background: var(--secondary);
         }
         
         /* Main Content */
         .page-content {
             display: none;
-            animation: fadeIn 0.5s ease;
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
             padding: 30px 0;
             min-height: calc(100vh - 150px);
-            transform-origin: top center;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        @keyframes scaleIn {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
         }
         
         .page-content.active {
             display: block;
-            animation: scaleIn 0.4s ease;
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .page-content.exiting {
+            opacity: 0;
+            transform: translateX(-50px);
         }
         
         .section-title {
@@ -278,6 +253,7 @@
             margin: 0 auto 30px;
             text-shadow: 0 1px 2px rgba(0,0,0,0.3);
         }
+        
         .btn {
             padding: 12px 30px;
             background: var(--secondary);
@@ -304,9 +280,7 @@
             background: rgba(255,255,255,0.2);
             transition: width 0.5s ease;
             z-index: -1;
-        }
-        
-        .btn:hover::before {
+        }.btn:hover::before {
             width: 100%;
         }
         
@@ -602,7 +576,7 @@
             align-items: center;
             gap: 15px;
             margin-bottom: 20px;
-        }
+            }
         
         .ai-icon {
             width: 60px;
@@ -707,28 +681,6 @@
         .ai-send:hover {
             background: #2980b9;
             transform: scale(1.05);
-        }
-        
-        .lang-toggle {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        
-        .lang-btn {
-            padding: 8px 20px;
-            background: rgba(255,255,255,0.15);
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 15px;
-            color: white;
-            font-weight: 500;
-        }
-        
-        .lang-btn.active {
-            background: var(--secondary);
         }
         
         .faq-grid {
@@ -876,6 +828,7 @@
             align-items: center;
             gap: 10px;
         }
+        
         .quantity-btn {
             width: 30px;
             height: 30px;
@@ -1014,26 +967,6 @@
                 max-height: 500px;
             }
             
-            .dropdown-content {
-                position: static;
-                opacity: 1;
-                visibility: visible;
-                transform: none;
-                box-shadow: none;
-                padding: 10px 0 0 20px;
-                background: transparent;
-            }
-            
-            .dropdown-content a {
-                color: #ddd;
-                padding: 8px 0;
-            }
-            
-            .dropdown-content a:hover {
-                color: var(--secondary);
-                background: transparent;
-            }
-            
             .hero h2 {
                 font-size: 28px;
             }
@@ -1050,15 +983,6 @@
             
             .step {
                 min-width: 100%;
-            }
-            
-            .lang-toggle {
-                flex-direction: column;
-            }
-            
-            .lang-btn {
-                width: 100%;
-                text-align: center;
             }
             
             .cart-item {
@@ -1180,19 +1104,23 @@
                 </button>
                 <nav>
                     <ul id="navMenu">
-                        <li><a href="#" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Главная</a></li>
-                        <li><a href="#" class="nav-link" data-page="products"><i class="fas fa-car-battery"></i> Товары</a></li>
-                        <li><a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> О нас</a></li>
-                        <li><a href="#" class="nav-link" data-page="delivery"><i class="fas fa-truck"></i> Доставка</a></li>
-                        <li><a href="#" class="nav-link" data-page="ai"><i class="fas fa-robot"></i> ИИ-помощник</a></li>
+                        <li><a href="#" class="nav-link active" data-page="home" data-translate="home"><i class="fas fa-home"></i> Главная</a></li>
+                        <li><a href="#" class="nav-link" data-page="products" data-translate="products"><i class="fas fa-car-battery"></i> Товары</a></li>
+                        <li><a href="#" class="nav-link" data-page="about" data-translate="about"><i class="fas fa-info-circle"></i> О нас</a></li>
+                        <li><a href="#" class="nav-link" data-page="delivery" data-translate="delivery"><i class="fas fa-truck"></i> Доставка</a></li>
+                        <li><a href="#" class="nav-link" data-page="ai" data-translate="ai"><i class="fas fa-robot"></i> ИИ-помощник</a></li>
                         <li>
-                            <a href="#" class="nav-link cart-icon" data-page="cart">
+                            <a href="#" class="nav-link cart-icon" data-page="cart" data-translate="cart">
                                 <i class="fas fa-shopping-cart"></i> 
                                 <span class="cart-count" id="cartCount">0</span>
                             </a>
                         </li>
                     </ul>
                 </nav>
+                <div class="language-toggle">
+                    <button class="lang-btn active" data-lang="ru">RU</button>
+                    <button class="lang-btn" data-lang="az">AZ</button>
+                </div>
             </div>
         </div>
     </header>
@@ -1203,22 +1131,22 @@
         <div class="page-content active" id="home-page">
             <div class="hero">
                 <div class="hero-content">
-                    <h2>Лучшие аккумуляторы для вашего авто</h2>
-                    <p>Высококачественные аккумуляторы с гарантией от производителя. Быстрая доставка по всей стране.</p>
-                    <a href="#" class="btn" id="catalog-btn">Смотреть каталог <i class="fas fa-arrow-right"></i></a>
+                    <h2 data-translate="hero_title">Лучшие аккумуляторы для вашего авто</h2>
+                    <p data-translate="hero_description">Высококачественные аккумуляторы с гарантией от производителя. Быстрая доставка по всей стране.</p>
+                    <a href="#" class="btn" id="catalog-btn" data-translate="view_catalog">Смотреть каталог <i class="fas fa-arrow-right"></i></a>
                 </div>
             </div>
             
             <div class="section-title">
-                <h2>Популярные товары</h2>
+                <h2 data-translate="popular_products">Популярные товары</h2>
             </div>
             
             <div class="products-grid">
                 <!-- Product 1 -->
                 <div class="product-card" data-id="1">
-                    <div class="product-badge">Топ продаж</div>
+                    <div class="product-badge" data-translate="top_sales">Топ продаж</div>
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1603732551681-2e91159b9dc2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BLU POLAR L3B75P">
+                        <img src="https://images.unsplash.com/photo-1603732551681-2e91159b9dc2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BLU POLAR L3B75P" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">BLU POLAR L3B75P</h3>
@@ -1229,7 +1157,7 @@
                         </div>
                         <div class="product-price">180.00</div>
                         <div class="product-actions">
-                            <button class="btn-cart add-to-cart">
+                            <button class="btn-cart add-to-cart" data-translate="add_to_cart">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <button class="btn-cart quick-view" data-id="1">
@@ -1241,9 +1169,9 @@
                 
                 <!-- Product 2 -->
                 <div class="product-card" data-id="2">
-                    <div class="product-badge">Новинка</div>
+                    <div class="product-badge" data-translate="new_product">Новинка</div>
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BLO POLAR L5100P">
+                        <img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BLO POLAR L5100P" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">BLO POLAR L5100P</h3>
@@ -1254,7 +1182,7 @@
                         </div>
                         <div class="product-price">210.00</div>
                         <div class="product-actions">
-                            <button class="btn-cart add-to-cart">
+                            <button class="btn-cart add-to-cart" data-translate="add_to_cart">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <button class="btn-cart quick-view" data-id="2">
@@ -1266,9 +1194,9 @@
                 
                 <!-- Product 3 -->
                 <div class="product-card" data-id="3">
-                    <div class="product-badge">Выбор механиков</div>
+                    <div class="product-badge" data-translate="mechanics_choice">Выбор механиков</div>
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1603739903239-8b6e64c3b185?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="PROFI 16 110">
+                        <img src="https://images.unsplash.com/photo-1603739903239-8b6e64c3b185?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="PROFI 16 110" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">PROFI 16 110</h3>
@@ -1279,7 +1207,7 @@
                         </div>
                         <div class="product-price">230.00</div>
                         <div class="product-actions">
-                            <button class="btn-cart add-to-cart">
+                            <button class="btn-cart add-to-cart" data-translate="add_to_cart">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <button class="btn-cart quick-view" data-id="3">
@@ -1294,24 +1222,24 @@
         <!-- Products Page -->
         <div class="page-content" id="products-page">
             <div class="section-title">
-                <h2>Все товары</h2>
-                <p>Широкий выбор аккумуляторов для любых транспортных средств</p>
+                <h2 data-translate="all_products">Все товары</h2>
+                <p data-translate="products_description">Широкий выбор аккумуляторов для любых транспортных средств</p>
             </div>
             
             <div class="categories">
-                <button class="category-btn active" data-category="all">Все</button>
-                <button class="category-btn" data-category="car">Автомобильные</button>
-                <button class="category-btn" data-category="truck">Грузовые</button>
-                <button class="category-btn" data-category="motorbike">Мото</button>
-                <button class="category-btn" data-category="boat">Лодочные</button>
+                <button class="category-btn active" data-category="all" data-translate="all">Все</button>
+                <button class="category-btn" data-category="car" data-translate="car">Автомобильные</button>
+                <button class="category-btn" data-category="truck" data-translate="truck">Грузовые</button>
+                <button class="category-btn" data-category="motorbike" data-translate="motorbike">Мото</button>
+                <button class="category-btn" data-category="boat" data-translate="boat">Лодочные</button>
             </div>
             
             <div class="products-grid">
                 <!-- Product 1 -->
                 <div class="product-card" data-id="1" data-category="car">
-                    <div class="product-badge">Топ продаж</div>
+                    <div class="product-badge" data-translate="top_sales">Топ продаж</div>
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1603732551681-2e91159b9dc2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BLU POLAR L3B75P">
+                        <img src="https://images.unsplash.com/photo-1603732551681-2e91159b9dc2?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BLU POLAR L3B75P" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">BLU POLAR L3B75P</h3>
@@ -1322,7 +1250,7 @@
                         </div>
                         <div class="product-price">180.00</div>
                         <div class="product-actions">
-                            <button class="btn-cart add-to-cart">
+                            <button class="btn-cart add-to-cart" data-translate="add_to_cart">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <button class="btn-cart quick-view" data-id="1">
@@ -1334,9 +1262,9 @@
                 
                 <!-- Product 2 -->
                 <div class="product-card" data-id="2" data-category="car">
-                    <div class="product-badge">Новинка</div>
+                    <div class="product-badge" data-translate="new_product">Новинка</div>
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BLO POLAR L5100P">
+                        <img src="https://images.unsplash.com/photo-1585060544812-6b45742d762f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="BLO POLAR L5100P" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">BLO POLAR L5100P</h3>
@@ -1347,7 +1275,7 @@
                         </div>
                         <div class="product-price">210.00</div>
                         <div class="product-actions">
-                            <button class="btn-cart add-to-cart">
+                            <button class="btn-cart add-to-cart" data-translate="add_to_cart">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <button class="btn-cart quick-view" data-id="2">
@@ -1359,9 +1287,9 @@
                 
                 <!-- Product 3 -->
                 <div class="product-card" data-id="3" data-category="car">
-                    <div class="product-badge">Выбор механиков</div>
+                    <div class="product-badge" data-translate="mechanics_choice">Выбор механиков</div>
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1603739903239-8b6e64c3b185?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="PROFI 16 110">
+                        <img src="https://images.unsplash.com/photo-1603739903239-8b6e64c3b185?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="PROFI 16 110" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">PROFI 16 110</h3>
@@ -1372,7 +1300,7 @@
                         </div>
                         <div class="product-price">230.00</div>
                         <div class="product-actions">
-                            <button class="btn-cart add-to-cart">
+                            <button class="btn-cart add-to-cart" data-translate="add_to_cart">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <button class="btn-cart quick-view" data-id="3">
@@ -1385,7 +1313,7 @@
                 <!-- Product 4 -->
                 <div class="product-card" data-id="4" data-category="truck">
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1626804475297-41608ea09aeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="PROFI 88888">
+                        <img src="https://images.unsplash.com/photo-1626804475297-41608ea09aeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="PROFI 88888" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">PROFI 88888</h3>
@@ -1396,7 +1324,7 @@
                         </div>
                         <div class="product-price">200.00</div>
                         <div class="product-actions">
-                            <button class="btn-cart add-to-cart">
+                            <button class="btn-cart add-to-cart" data-translate="add_to_cart">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <button class="btn-cart quick-view" data-id="4">
@@ -1405,12 +1333,11 @@
                         </div>
                     </div>
                 </div>
-                
                 <!-- Product 5 -->
                 <div class="product-card" data-id="5" data-category="motorbike">
-                    <div class="product-badge">Акция</div>
+                    <div class="product-badge" data-translate="promotion">Акция</div>
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1621370277760-4f5e6c392e76?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="GOLD POWER 65">
+                        <img src="https://images.unsplash.com/photo-1621370277760-4f5e6c392e76?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="GOLD POWER 65" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">GOLD POWER 65</h3>
@@ -1421,7 +1348,7 @@
                         </div>
                         <div class="product-price">150.00</div>
                         <div class="product-actions">
-                            <button class="btn-cart add-to-cart">
+                            <button class="btn-cart add-to-cart" data-translate="add_to_cart">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <button class="btn-cart quick-view" data-id="5">
@@ -1434,7 +1361,7 @@
                 <!-- Product 6 -->
                 <div class="product-card" data-id="6" data-category="boat">
                     <div class="product-img">
-                        <img src="https://images.unsplash.com/photo-1621370277760-4f5e6c392e76?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="ULTRA PRO 120">
+                        <img src="https://images.unsplash.com/photo-1621370277760-4f5e6c392e76?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="ULTRA PRO 120" loading="lazy">
                     </div>
                     <div class="product-info">
                         <h3 class="product-name">ULTRA PRO 120</h3>
@@ -1445,7 +1372,7 @@
                         </div>
                         <div class="product-price">250.00</div>
                         <div class="product-actions">
-                            <button class="btn-cart add-to-cart">
+                            <button class="btn-cart add-to-cart" data-translate="add_to_cart">
                                 <i class="fas fa-shopping-cart"></i> В корзину
                             </button>
                             <button class="btn-cart quick-view" data-id="6">
@@ -1457,119 +1384,119 @@
             </div>
             
             <div class="upload-container">
-                <h3>Загрузите фото вашего аккумулятора</h3>
-                <p>Наши специалисты помогут вам подобрать идеальную замену</p>
+                <h3 data-translate="upload_battery_photo">Загрузите фото вашего аккумулятора</h3>
+                <p data-translate="upload_description">Наши специалисты помогут вам подобрать идеальную замену</p>
+                
                 <div class="upload-area" id="uploadArea">
                     <i class="fas fa-cloud-upload-alt"></i>
-                    <p>Перетащите сюда фото или <strong>нажмите для выбора</strong></p>
+                    <p data-translate="upload_prompt">Перетащите сюда фото или <strong>нажмите для выбора</strong></p>
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
                 </div>
                 
-                <button class="upload-btn" id="uploadBtn">
+                <button class="upload-btn" id="uploadBtn" data-translate="upload_button">
                     <i class="fas fa-upload"></i> Загрузить фото
                 </button>
                 
-                <img src="" alt="Preview" class="upload-preview" id="uploadPreview">
+                <img src="" alt="Preview" class="upload-preview" id="uploadPreview" loading="lazy">
             </div>
         </div>
-        
         <!-- About Page -->
         <div class="page-content" id="about-page">
             <div class="section-title">
-                <h2>О нашей компании</h2>
-                <p>Лидер рынка аккумуляторов с 2010 года</p>
+                <h2 data-translate="about_us">О нашей компании</h2>
+                <p data-translate="about_description">Лидер рынка аккумуляторов с 2010 года</p>
             </div>
             
             <div class="about-content">
-                <p>Компания BatteryPro работает на рынке с 2010 года и является ведущим поставщиком аккумуляторов премиум-класса в Азербайджане. Наша миссия - обеспечить клиентов надежными и долговечными решениями для энергоснабжения.</p>
+                <p data-translate="about_intro">Компания BatteryPro работает на рынке с 2010 года и является ведущим поставщиком аккумуляторов премиум-класса в Азербайджане. Наша миссия - обеспечить клиентов надежными и долговечными решениями для энергоснабжения.</p>
                 
-                <h3>Наша история</h3>
-                <p>Начав с небольшого магазина в центре Баку, сегодня мы имеем сеть из 12 магазинов по всей стране и собственный склад площадью 2000 м². За годы работы мы поставили более 50 000 аккумуляторов для различных типов транспортных средств.</p>
+                <h3 data-translate="our_history">Наша история</h3>
+                <p data-translate="history_description">Начав с небольшого магазина в центре Баку, сегодня мы имеем сеть из 12 магазинов по всей стране и собственный склад площадью 2000 м². За годы работы мы поставили более 50 000 аккумуляторов для различных типов транспортных средств.</p>
                 
-                <h3>Наши ценности</h3>
+                <h3 data-translate="our_values">Наши ценности</h3>
                 <ul>
-                    <li>Качество продукции - только сертифицированные товары от ведущих производителей</li>
-                    <li>Профессиональная консультация - наши специалисты помогут подобрать идеальный аккумулятор</li>
-                    <li>Гарантия 24 месяца на все товары</li>
-                    <li>Экологическая ответственность - принимаем старые аккумуляторы на утилизацию</li>
+                    <li data-translate="value_quality">Качество продукции - только сертифицированные товары от ведущих производителей</li>
+                    <li data-translate="value_consultation">Профессиональная консультация - наши специалисты помогут подобрать идеальный аккумулятор</li>
+                    <li data-translate="value_warranty">Гарантия 24 месяца на все товары</li>
+                    <li data-translate="value_eco">Экологическая ответственность - принимаем старые аккумуляторы на утилизацию</li>
                 </ul>
                 
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-value">12+</div>
-                        <div class="stat-label">Лет на рынке</div>
+                        <div class="stat-label" data-translate="years_on_market">Лет на рынке</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value">50K+</div>
-                        <div class="stat-label">Продано аккумуляторов</div>
+                        <div class="stat-label" data-translate="batteries_sold">Продано аккумуляторов</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value">12</div>
-                        <div class="stat-label">Магазинов по стране</div>
+                        <div class="stat-label" data-translate="stores_countrywide">Магазинов по стране</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value">24</div>
-                        <div class="stat-label">Месяца гарантии</div>
+                        <div class="stat-label" data-translate="months_warranty">Месяца гарантии</div>
                     </div>
                 </div>
                 
-                <h3>Наша команда</h3>
-                <p>В BatteryPro работают высококвалифицированные специалисты с многолетним опытом в автомобильной индустрии. Каждый сотрудник проходит специальное обучение и регулярно повышает квалификацию. Мы гордимся тем, что наши клиенты возвращаются к нам снова и рекомендуют нас своим друзьям.</p>
+                <h3 data-translate="our_team">Наша команда</h3>
+                <p data-translate="team_description">В BatteryPro работают высококвалифицированные специалисты с многолетним опытом в автомобильной индустрии. Каждый сотрудник проходит специальное обучение и регулярно повышает квалификацию. Мы гордимся тем, что наши клиенты возвращаются к нам снова и рекомендуют нас своим друзьям.</p>
             </div>
         </div>
         
         <!-- Delivery Page -->
         <div class="page-content" id="delivery-page">
             <div class="section-title">
-                <h2>Доставка и возврат</h2>
-                <p>Быстро, надежно и удобно</p>
+                <h2 data-translate="delivery_and_returns">Доставка и возврат</h2>
+                <p data-translate="delivery_description">Быстро, надежно и удобно</p>
             </div>
             
             <div class="delivery-content">
-                <h3>Условия доставки</h3>
-                <p>Мы осуществляем доставку по всему Азербайджану в течение 1-3 рабочих дней. Стоимость доставки зависит от вашего местоположения:</p>
+                <h3 data-translate="delivery_terms">Условия доставки</h3>
+                <p data-translate="delivery_terms_description">Мы осуществляем доставку по всему Азербайджану в течение 1-3 рабочих дней. Стоимость доставки зависит от вашего местоположения:</p>
                 
                 <ul>
-                    <li>Баку - бесплатно при заказе от 600 ₼, иначе 50 ₼</li>
-                    <li>Сумгаит, Хырдалан - 8 ₼</li>
-                    <li>Другие города - 15 ₼</li>
+                    <li data-translate="delivery_baku">Баку - бесплатно при заказе от 100 ₼, иначе 5 ₼</li>
+                    <li data-translate="delivery_sumgait">Сумгаит, Хырдалан - 8 ₼</li>
+                    <li data-translate="delivery_other">Другие города - 15 ₼</li>
                 </ul>
                 
-                <h3>Процесс доставки</h3>
+                <h3 data-translate="delivery_process">Процесс доставки</h3>
                 <div class="steps">
                     <div class="step" data-step="1">
-                        <h4>Оформление заказа</h4>
-                        <p>Выберите товары и оформите заказ на сайте или по телефону</p>
+                        <h4 data-translate="step_order">Оформление заказа</h4>
+                        <p data-translate="step_order_desc">Выберите товары и оформите заказ на сайте или по телефону</p>
                     </div>
                     <div class="step" data-step="2">
-                        <h4>Подтверждение</h4>
-                        <p>Наш менеджер свяжется с вами для подтверждения заказа</p>
+                        <h4 data-translate="step_confirmation">Подтверждение</h4>
+                        <p data-translate="step_confirmation_desc">Наш менеджер свяжется с вами для подтверждения заказа</p>
                     </div>
                     <div class="step" data-step="3">
-                        <h4>Доставка</h4>
-                        <p>Курьер доставит заказ в удобное для вас время</p>
+                        <h4 data-translate="step_delivery">Доставка</h4>
+                        <p data-translate="step_delivery_desc">Курьер доставит заказ в удобное для вас время</p>
                     </div>
                     <div class="step" data-step="4">
-                        <h4>Оплата</h4>
-                        <p>Оплата при получении наличными или картой</p>
+                        <h4 data-translate="step_payment">Оплата</h4>
+                        <p data-translate="step_payment_desc">Оплата при получении наличными или картой</p>
                     </div>
                 </div>
                 
-                <h3>Условия возврата</h3>
-                <p>Мы принимаем возврат товара в течение 14 дней с момента покупки при условии:</p>
+                <h3 data-translate="return_conditions">Условия возврата</h3>
+                <p data-translate="return_conditions_desc">Мы принимаем возврат товара в течение 14 дней с момента покупки при условии:</p>
                 <ul>
-                    <li>Сохранение товарного вида упаковки</li>
-                    <li>Отсутствие следов использования</li>
-                    <li>Наличие товарного чека</li>
+                    <li data-translate="return_packaging">Сохранение товарного вида упаковки</li>
+                    <li data-translate="return_usage">Отсутствие следов использования</li>
+                    <li data-translate="return_receipt">Наличие товарного чека</li>
                 </ul>
-                <p>Для возврата обратитесь в любой из наших магазинов или свяжитесь с нашим call-центром.</p>
+                <p data-translate="return_contact">Для возврата обратитесь в любой из наших магазинов или свяжитесь с нашим call-центром.</p>
                 
-                <h3>Самовывоз</h3>
-                <p>Вы также можете забрать заказ самостоятельно в одном из наших магазинов:</p>
+                <h3 data-translate="pickup">Самовывоз</h3>
+                <p data-translate="pickup_description">Вы также можете забрать заказ самостоятельно в одном из наших магазинов:</p>
                 <ul>
-                    <li>Баку, пр. Нефтчиляр 123 - ежедневно с 9:00 до 20:00</li>
-                    <li>Сумгаит, ул. Алиева 45 - пн-сб с 10:00 до 19:00</li>
-                    <li>Гянджа, пр. Гейдара Алиева 67 - пн-сб с 10:00 до 18:00</li>
+                    <li data-translate="pickup_baku">Баку, пр. Нефтчиляр 123 - ежедневно с 9:00 до 20:00</li>
+                    <li data-translate="pickup_sumgait">Сумгаит, ул. Алиева 45 - пн-сб с 10:00 до 19:00</li>
+                    <li data-translate="pickup_ganja">Гянджа, пр. Гейдара Алиева 67 - пн-сб с 10:00 до 18:00</li>
                 </ul>
             </div>
         </div>
@@ -1577,8 +1504,8 @@
         <!-- AI Assistant Page -->
         <div class="page-content" id="ai-page">
             <div class="section-title">
-                <h2>ИИ-помощник</h2>
-                <p>Наш искусственный интеллект поможет подобрать идеальный аккумулятор</p>
+                <h2 data-translate="ai_assistant">ИИ-помощник</h2>
+                <p data-translate="ai_description">Наш искусственный интеллект поможет подобрать идеальный аккумулятор</p>
             </div>
             
             <div class="ai-assistant">
@@ -1587,53 +1514,40 @@
                         <i class="fas fa-robot"></i>
                     </div>
                     <div class="ai-title">
-                        <h3>Помощь в выборе аккумулятора</h3>
-                        <p>Наш ИИ-ассистент поможет подобрать идеальный аккумулятор для вашего авто</p>
+                        <h3 data-translate="ai_help_title">Помощь в выборе аккумулятора</h3>
+                        <p data-translate="ai_help_description">Наш ИИ-ассистент поможет подобрать идеальный аккумулятор для вашего авто</p>
                     </div>
                 </div>
                 
-                <div class="ai-conversation" id="ai-conversation">
-                    <div class="message ai-message">
-                        Здравствуйте! Я ваш помощник по выбору аккумуляторов. На каком языке вам удобнее общаться?
-                    </div>
-                    <div class="message ai-message">
-                        Salam! Batareya seçiminizdə sizə kömək edəcək assistentəm. Hansı dildə danışmaq sizin üçün daha rahatdır?
-                    </div>
-                </div>
-                
-                <div class="lang-toggle">
-                    <button class="lang-btn active" id="lang-ru">Русский</button>
-                    <button class="lang-btn" id="lang-az">Azərbaycanca</button>
-                </div>
-                
+                <div class="ai-conversation" id="ai-conversation"></div>
                 <div class="ai-input-group">
                     <input type="text" class="ai-input" id="ai-input" placeholder="Задайте ваш вопрос...">
                     <button class="ai-send" id="ai-send">
                         <i class="fas fa-paper-plane"></i>
-                        </button>
+                    </button>
                 </div>
             </div>
             
             <div style="background: white; border-radius: var(--border-radius); padding: 25px; margin-top: 30px; box-shadow: var(--shadow);">
-                <h3 style="color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
+                <h3 style="color: var(--primary); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;" data-translate="faq_title">
                     <i class="fas fa-question-circle"></i> Часто задаваемые вопросы
                 </h3>
                 <div class="faq-grid">
                     <div class="faq-item">
-                        <h4><i class="fas fa-car"></i> Как выбрать аккумулятор?</h4>
-                        <p>Учитывайте марку и модель автомобиля, объем двигателя, тип коробки передач и климатические условия вашего региона.</p>
+                        <h4 data-translate="faq_how_to_choose"><i class="fas fa-car"></i> Как выбрать аккумулятор?</h4>
+                        <p data-translate="faq_how_to_choose_desc">Учитывайте марку и модель автомобиля, объем двигателя, тип коробки передач и климатические условия вашего региона.</p>
                     </div>
                     <div class="faq-item">
-                        <h4><i class="fas fa-clock"></i> Сколько служит аккумулятор?</h4>
-                        <p>Средний срок службы аккумулятора 3-5 лет, но зависит от условий эксплуатации и качества зарядки.</p>
+                        <h4 data-translate="faq_lifespan"><i class="fas fa-clock"></i> Сколько служит аккумулятор?</h4>
+                        <p data-translate="faq_lifespan_desc">Средний срок службы аккумулятора 3-5 лет, но зависит от условий эксплуатации и качества зарядки.</p>
                     </div>
                     <div class="faq-item">
-                        <h4><i class="fas fa-bolt"></i> Как проверить состояние аккумулятора?</h4>
-                        <p>Используйте мультиметр для измерения напряжения. Полностью заряженный аккумулятор должен показывать 12.6-12.7В.</p>
+                        <h4 data-translate="faq_check_status"><i class="fas fa-bolt"></i> Как проверить состояние аккумулятора?</h4>
+                        <p data-translate="faq_check_status_desc">Используйте мультиметр для измерения напряжения. Полностью заряженный аккумулятор должен показывать 12.6-12.7В.</p>
                     </div>
                     <div class="faq-item">
-                        <h4><i class="fas fa-snowflake"></i> Как подготовить аккумулятор к зиме?</h4>
-                        <p>Проверьте уровень заряда, очистите клеммы, при необходимости зарядите аккумулятор и утеплите его специальным чехлом.</p>
+                        <h4 data-translate="faq_winter_prep"><i class="fas fa-snowflake"></i> Как подготовить аккумулятор к зиме?</h4>
+                        <p data-translate="faq_winter_prep_desc">Проверьте уровень заряда, очистите клеммы, при необходимости зарядите аккумулятор и утеплите его специальным чехлом.</p>
                     </div>
                 </div>
             </div>
@@ -1642,35 +1556,34 @@
         <!-- Cart Page -->
         <div class="page-content" id="cart-page">
             <div class="section-title">
-                <h2>Ваша корзина</h2>
-                <p>Товары, которые вы выбрали</p>
+                <h2 data-translate="your_cart">Ваша корзина</h2>
+                <p data-translate="cart_description">Товары, которые вы выбрали</p>
             </div>
             
             <div class="cart-container">
                 <div id="cart-items">
-                    <!-- Cart items will be inserted here dynamically -->
                     <div class="empty-cart">
                         <i class="fas fa-shopping-cart"></i>
-                        <h3>Ваша корзина пуста</h3>
-                        <p>Добавьте товары из каталога</p>
-                        <a href="#" class="btn nav-link" data-page="products" style="margin-top: 20px;">Перейти в каталог</a>
+                        <h3 data-translate="cart_empty">Ваша корзина пуста</h3>
+                        <p data-translate="add_from_catalog">Добавьте товары из каталога</p>
+                        <a href="#" class="btn nav-link" data-page="products" style="margin-top: 20px;" data-translate="go_to_catalog">Перейти в каталог</a>
                     </div>
                 </div>
                 
                 <div class="cart-summary" id="cart-summary" style="display: none;">
                     <div class="summary-row">
-                        <span>Товары:</span>
+                        <span data-translate="items">Товары:</span>
                         <span id="subtotal">0.00 ₼</span>
                     </div>
                     <div class="summary-row">
-                        <span>Доставка:</span>
+                        <span data-translate="delivery">Доставка:</span>
                         <span id="delivery">0.00 ₼</span>
                     </div>
                     <div class="summary-row summary-total">
-                        <span>Итого:</span>
+                        <span data-translate="total">Итого:</span>
                         <span id="total">0.00 ₼</span>
                     </div>
-                    <button class="checkout-btn">Оформить заказ</button>
+                    <button class="checkout-btn" data-translate="checkout">Оформить заказ</button>
                 </div>
             </div>
         </div>
@@ -1681,138 +1594,376 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-column">
-                    <h3>Магазин</h3>
+                    <h3 data-translate="shop">Магазин</h3>
                     <ul>
-                        <li><a href="#" class="nav-link" data-page="products"><i class="fas fa-car-battery"></i> Товары</a></li>
-                        <li><a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> О нас</a></li>
-                        <li><a href="#" class="nav-link" data-page="delivery"><i class="fas fa-truck"></i> Доставка</a></li>
-                        <li><a href="#" class="nav-link" data-page="ai"><i class="fas fa-robot"></i> ИИ-помощник</a></li>
+                        <li><a href="#" class="nav-link" data-page="products" data-translate="products"><i class="fas fa-car-battery"></i> Товары</a></li>
+                        <li><a href="#" class="nav-link" data-page="about" data-translate="about"><i class="fas fa-info-circle"></i> О нас</a></li>
+                        <li><a href="#" class="nav-link" data-page="delivery" data-translate="delivery"><i class="fas fa-truck"></i> Доставка</a></li>
+                        <li><a href="#" class="nav-link" data-page="ai" data-translate="ai"><i class="fas fa-robot"></i> ИИ-помощник</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-column">
-                    <h3>Категории</h3>
+                    <h3 data-translate="categories">Категории</h3>
                     <ul>
-                        <li><a href="#"><i class="fas fa-car"></i> Автомобильные</a></li>
-                        <li><a href="#"><i class="fas fa-motorcycle"></i> Мотоциклетные</a></li>
-                        <li><a href="#"><i class="fas fa-ship"></i> Для лодок</a></li>
-                        <li><a href="#"><i class="fas fa-industry"></i> Промышленные</a></li>
+                        <li><a href="#" data-translate="car"><i class="fas fa-car"></i> Автомобильные</a></li>
+                        <li><a href="#" data-translate="motorbike"><i class="fas fa-motorcycle"></i> Мотоциклетные</a></li>
+                        <li><a href="#" data-translate="boat"><i class="fas fa-ship"></i> Для лодок</a></li>
+                        <li><a href="#" data-translate="industrial"><i class="fas fa-industry"></i> Промышленные</a></li>
                     </ul>
                 </div>
                 
                 <div class="footer-column">
-                    <h3>Контакты</h3>
+                    <h3 data-translate="contacts">Контакты</h3>
                     <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> Баку, пр. Нефтчиляр 123</li>
-                        <li><i class="fas fa-phone"></i> +994 12 345 67 89</li>
-                        <li><i class="fas fa-envelope"></i> info@batterypro.az</li>
-                        <li><i class="fas fa-clock"></i> Пн-Сб: 9:00-19:00</li>
+                        <li data-translate="address_baku"><i class="fas fa-map-marker-alt"></i> Баку, пр. Нефтчиляр 123</li>
+                        <li data-translate="phone"><i class="fas fa-phone"></i> +994 12 345 67 89</li>
+                        <li data-translate="email"><i class="fas fa-envelope"></i> info@batterypro.az</li>
+                        <li data-translate="hours"><i class="fas fa-clock"></i> Пн-Сб: 9:00-19:00</li>
                     </ul>
                 </div>
                 
                 <div class="footer-column">
-                    <h3>Мы в соцсетях</h3>
+                    <h3 data-translate="social_media">Мы в соцсетях</h3>
                     <ul>
-                        <li><a href="#"><i class="fab fa-facebook"></i> Facebook</a></li>
-                        <li><a href="#"><i class="fab fa-instagram"></i> Instagram</a></li>
-                        <li><a href="#"><i class="fab fa-youtube"></i> YouTube</a></li>
-                        <li><a href="#"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+                        <li><a href="#" data-translate="facebook"><i class="fab fa-facebook"></i> Facebook</a></li>
+                        <li><a href="#" data-translate="instagram"><i class="fab fa-instagram"></i> Instagram</a></li>
+                        <li><a href="#" data-translate="youtube"><i class="fab fa-youtube"></i> YouTube</a></li>
+                        <li><a href="#" data-translate="whatsapp"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
                     </ul>
                 </div>
             </div>
             
-            <div class="copyright">
-                &copy; 2023 BatteryPro. Все права защищены. 
+            <div class="copyright" data-translate="copyright">
+                © 2023 BatteryPro. Все права защищены.
             </div>
         </div>
     </footer>
 
     <script>
-        // Навигация по страницам
         document.addEventListener('DOMContentLoaded', function() {
-            // Элементы страниц
+            // Переводы
+            const translations = {
+                ru: {
+                    home: "Главная",
+                    products: "Товары",
+                    about: "О нас",
+                    delivery: "Доставка",
+                    ai: "ИИ-помощник",
+                    cart: "Корзина",
+                    hero_title: "Лучшие аккумуляторы для вашего авто",
+                    hero_description: "Высококачественные аккумуляторы с гарантией от производителя. Быстрая доставка по всей стране.",
+                    view_catalog: "Смотреть каталог",
+                    popular_products: "Популярные товары",
+                    top_sales: "Топ продаж",
+                    new_product: "Новинка",
+                    mechanics_choice: "Выбор механиков",
+                    promotion: "Акция",
+                    add_to_cart: "В корзину",
+                    all_products: "Все товары",
+                    products_description: "Широкий выбор аккумуляторов для любых транспортных средств",
+                    all: "Все",
+                    car: "Автомобильные",
+                    truck: "Грузовые",
+                    motorbike: "Мото",
+                    boat: "Лодочные",
+                    upload_battery_photo: "Загрузите фото вашего аккумулятора",
+                    upload_description: "Наши специалисты помогут вам подобрать идеальную замену",
+                    upload_prompt: "Перетащите сюда фото или <strong>нажмите для выбора</strong>",
+                    upload_button: "Загрузить фото",
+                    about_us: "О нашей компании",
+                    about_description: "Лидер рынка аккумуляторов с 2010 года",
+                    about_intro: "Компания BatteryPro работает на рынке с 2010 года и является ведущим поставщиком аккумуляторов премиум-класса в Азербайджане. Наша миссия - обеспечить клиентов надежными и долговечными решениями для энергоснабжения.",
+                    our_history: "Наша история",
+                    history_description: "Начав с небольшого магазина в центре Баку, сегодня мы имеем сеть из 12 магазинов по всей стране и собственный склад площадью 2000 м². За годы работы мы поставили более 50 000 аккумуляторов для различных типов транспортных средств.",
+                    our_values: "Наши ценности",
+                    value_quality: "Качество продукции - только сертифицированные товары от ведущих производителей",
+                    value_consultation: "Профессиональная консультация - наши специалисты помогут подобрать идеальный аккумулятор",
+                    value_warranty: "Гарантия 24 месяца на все товары",
+                    value_eco: "Экологическая ответственность - принимаем старые аккумуляторы на утилизацию",
+                    years_on_market: "Лет на рынке",
+                    batteries_sold: "Продано аккумуляторов",
+                    stores_countrywide: "Магазинов по стране",
+                    months_warranty: "Месяца гарантии",
+                    our_team: "Наша команда",
+                    team_description: "В BatteryPro работают высококвалифицированные специалисты с многолетним опытом в автомобильной индустрии. Каждый сотрудник проходит специальное обучение и регулярно повышает квалификацию. Мы гордимся тем, что наши клиенты возвращаются к нам снова и рекомендуют нас своим друзьям.",
+                    delivery_and_returns: "Доставка и возврат",
+                    delivery_description: "Быстро, надежно и удобно",
+                    delivery_terms: "Условия доставки",
+                    delivery_terms_description: "Мы осуществляем доставку по всему Азербайджану в течение 1-3 рабочих дней. Стоимость доставки зависит от вашего местоположения:",
+                    delivery_baku: "Баку - бесплатно при заказе от 100 ₼, иначе 5 ₼",
+                    delivery_sumgait: "Сумгаит, Хырдалан - 8 ₼",
+                    delivery_other: "Другие города - 15 ₼",
+                    delivery_process: "Процесс доставки",
+                    step_order: "Оформление заказа",
+                    step_order_desc: "Выберите товары и оформите заказ на сайте или по телефону",
+                    step_confirmation: "Подтверждение",
+                    step_confirmation_desc: "Наш менеджер свяжется с вами для подтверждения заказа",
+                    step_delivery: "Доставка",
+                    step_delivery_desc: "Курьер доставит заказ в удобное для вас время",
+                    step_payment: "Оплата",
+                    step_payment_desc: "Оплата при получении наличными или картой",
+                    return_conditions: "Условия возврата",
+                    return_conditions_desc: "Мы принимаем возврат товара в течение 14 дней с момента покупки при условии:",
+                    return_packaging: "Сохранение товарного вида упаковки",
+                    return_usage: "Отсутствие следов использования",
+                    return_receipt: "Наличие товарного чека",
+                    return_contact: "Для возврата обратитесь в любой из наших магазинов или свяжитесь с нашим call-центром.",
+                    pickup: "Самовывоз",
+                    pickup_description: "Вы также можете забрать заказ самостоятельно в одном из наших магазинов:",
+                    pickup_baku: "Баку, пр. Нефтчиляр 123 - ежедневно с 9:00 до 20:00",
+                    pickup_sumgait: "Сумгаит, ул. Алиева 45 - пн-сб с 10:00 до 19:00",
+                    pickup_ganja: "Гянджа, пр. Гейдара Алиева 67 - пн-сб с 10:00 до 18:00",
+                    ai_assistant: "ИИ-помощник",
+                    ai_description: "Наш искусственный интеллект поможет подобрать идеальный аккумулятор",
+                    ai_help_title: "Помощь в выборе аккумулятора",
+                    ai_help_description: "Наш ИИ-ассистент поможет подобрать идеальный аккумулятор для вашего авто",
+                    ai_welcome: "Здравствуйте! Чем могу помочь с выбором аккумулятора?",
+                    ai_placeholder: "Задайте ваш вопрос...",
+                    faq_title: "Часто задаваемые вопросы",
+                    faq_how_to_choose: "Как выбрать аккумулятор?",
+                    faq_how_to_choose_desc: "Учитывайте марку и модель автомобиля, объем двигателя, тип коробки передач и климатические условия вашего региона.",
+                    faq_lifespan: "Сколько служит аккумулятор?",
+                    faq_lifespan_desc: "Средний срок службы аккумулятора 3-5 лет, но зависит от условий эксплуатации и качества зарядки.",
+                    faq_check_status: "Как проверить состояние аккумулятора?",
+                    faq_check_status_desc: "Используйте мультиметр для измерения напряжения. Полностью заряженный аккумулятор должен показывать 12.6-12.7В.",
+                    faq_winter_prep: "Как подготовить аккумулятор к зиме?",
+                    faq_winter_prep_desc: "Проверьте уровень заряда, очистите клеммы, при необходимости зарядите аккумулятор и утеплите его специальным чехлом.",
+                    your_cart: "Ваша корзина",
+                    cart_description: "Товары, которые вы выбрали",
+                    cart_empty: "Ваша корзина пуста",
+                    add_from_catalog: "Добавьте товары из каталога",
+                    go_to_catalog: "Перейти в каталог",
+                    items: "Товары:",
+                    delivery: "Доставка:",
+                    total: "Итого:",
+                    checkout: "Оформить заказ",
+                    shop: "Магазин",
+                    categories: "Категории",
+                    industrial: "Промышленные",
+                    contacts: "Контакты",
+                    address_baku: "Баку, пр. Нефтчиляр 123",
+                    phone: "+994 12 345 67 89",
+                    email: "info@batterypro.az",
+                    hours: "Пн-Сб: 9:00-19:00",
+                    social_media: "Мы в соцсетях",
+                    facebook: "Facebook",
+                    instagram: "Instagram",
+                    youtube: "YouTube",
+                    whatsapp: "WhatsApp",
+                    copyright: "© 2023 BatteryPro. Все права защищены."
+                },
+                az: {
+                    home: "Ana səhifə",
+                    products: "Məhsullar",
+                    about: "Haqqımızda",
+                    delivery: "Çatdırılma",
+                    ai: "Süni intellekt köməkçisi",
+                    cart: "Səbət",
+                    hero_title: "Avtomobiliniz üçün ən yaxşı akkumulyatorlar",
+                    hero_description: "İstehsalçı tərəfindən zəmanətli yüksək keyfiyyətli akkumulyatorlar. Ölkə üzrə sürətli çatdırılma.",
+                    view_catalog: "Kataloqa bax",
+                    popular_products: "Populyar məhsullar",
+                    top_sales: "Ən çox satılan",
+                    new_product: "Yeni",
+                    mechanics_choice: "Mexaniklərin seçimi",
+                    promotion: "Aksiya",
+                    add_to_cart: "Səbətə əlavə et",
+                    all_products: "Bütün məhsullar",
+                    products_description: "Müxtəlif nəqliyyat vasitələri üçün geniş akkumulyator seçimi",
+                    all: "Hamısı",
+                    car: "Avtomobil",
+                    truck: "Yük maşınları",
+                    motorbike: "Moto",
+                    boat: "Qayıqlar",
+                    upload_battery_photo: "Akkumulyatorunuzun şəklini yükləyin",
+                    upload_description: "Mütəxəssislərimiz sizə ideal əvəzi seçməkdə kömək edəcək",
+                    upload_prompt: "Şəkli bura sürüşdürün və ya <strong>seçmək üçün klikləyin</strong>",
+                    upload_button: "Şəkli yüklə",
+                    about_us: "Şirkətimiz haqqında",
+                    about_description: "2010-cu ildən akkumulyator bazarının lideri",
+                    about_intro: "BatteryPro şirkəti 2010-cu ildən bazarda fəaliyyət göstərir və Azərbaycanda premium sinif akkumulyatorların aparıcı təchizatçısıdır. Missiyamız müştərilərimizi etibarlı və uzunömürlü enerji həlləri ilə təmin etməkdir.",
+                    our_history: "Tariximiz",
+                    history_description: "Bakının mərkəzində kiçik bir mağaza ilə başlayaraq, bu gün ölkə üzrə 12 mağazadan ibarət şəbəkəmiz və 2000 m² sahəsi olan öz anbarımız var. Fəaliyyət illəri ərzində müxtəlif nəqliyyat vasitələri üçün 50 000-dən çox akkumulyator tədarük etmişik.",
+                    our_values: "Dəyərlərimiz",
+                    value_quality: "Məhsul keyfiyyəti - yalnız aparıcı istehsalçılardan sertifikatlı məhsullar",
+                    value_consultation: "Peşəkar məsləhət - mütəxəssislərimiz ideal akkumulyatoru seçməyinizə kömək edəcək",
+                    value_warranty: "Bütün məhsullara 24 ay zəmanət",
+                    value_eco: "Ekoloji məsuliyyət - köhnə akkumulyatorları utilizasiya üçün qəbul edirik",
+                    years_on_market: "Bazardakı illər",
+                    batteries_sold: "Satılan akkumulyatorlar",
+                    stores_countrywide: "Ölkə üzrə mağazalar",
+                    months_warranty: "Zəmanət ayları",
+                    our_team: "Komandamız",
+                    team_description: "BatteryPro-da avtomobil sənayesində çoxillik təcrübəyə malik yüksək ixtisaslı mütəxəssislər çalışır. Hər bir əməkdaş xüsusi təlim keçir və müntəzəm olaraq ixtisasını artırır. Müştərilərimizin bizə təkrar müraciət etməsi və dostlarına tövsiyə etməsi ilə fəxr edirik.",
+                    delivery_and_returns: "Çatdırılma və qaytarma",
+                    delivery_description: "Sürətli, etibarlı və rahat",
+                    delivery_terms: "Çatdırılma şərtləri",
+                    delivery_terms_description: "Biz bütün Azərbaycan üzrə 1-3 iş günü ərzində çatdırılma həyata keçiririk. Çatdırılma qiyməti yerləşdiyiniz yerdən asılıdır:",
+                    delivery_baku: "Bakı - 100 ₼-dan yuxarı sifarişlərdə pulsuz, əks halda 5 ₼",
+                    delivery_sumgait: "Sumqayıt, Xırdalan - 8 ₼",
+                    delivery_other: "Digər şəhərlər - 15 ₼",
+                    delivery_process: "Çatdırılma prosesi",
+                    step_order: "Sifarişin qəbulu",
+                    step_order_desc: "Məhsulları seçin və sifarişi saytda və ya telefonla rəsmiləşdirin",
+                    step_confirmation: "Təsdiqləmə",
+                    step_confirmation_desc: "Menecerimiz sifarişi təsdiqləmək üçün sizinlə əlaqə saxlayacaq",
+                    step_delivery: "Çatdırılma",
+                    step_delivery_desc: "Kuryer sifarişi sizin üçün əlverişli vaxtda çatdıracaq",
+                    step_payment: "Ödəniş",
+                    step_payment_desc: "Əldə edərkən nağd və ya kartla ödəniş",
+                    return_conditions: "Qaytarma şərtləri",
+                    return_conditions_desc: "Malı alışdan sonra 14 gün ərzində qaytara bilərsiniz, əgər:",
+                    return_packaging: "Qablaşdırmanın ticarət görünüşü saxlanılıb",
+                    return_usage: "İstifadə izləri yoxdur",
+                    return_receipt: "Ticarət çeki mövcuddur",
+                    return_contact: "Qaytarma üçün istənilən mağazamıza müraciət edin və ya call-center ilə əlaqə saxlayın.",
+                    pickup: "Özün götürmə",
+                    pickup_description: "Sifarişi özünüz də mağazalarımızdan birindən götürə bilərsiniz:",
+                    pickup_baku: "Bakı, Neftçilər pr. 123 - hər gün 9:00-dan 20:00-dək",
+                    pickup_sumgait: "Sumqayıt, Əliyev küç. 45 - b.e.-ş. 10:00-dan 19:00-dək",
+                    pickup_ganja: "Gəncə, Heydər Əliyev pr. 67 - b.e.-ş. 10:00-dan 18:00-dək",
+                    ai_assistant: "Süni intellekt köməkçisi",
+                    ai_description: "Süni intellektimiz sizə ideal akkumulyatoru seçməkdə kömək edəcək",
+                    ai_help_title: "Akkumulyator seçimində kömək",
+                    ai_help_description: "Süni intellekt köməkçimiz avtomobiliniz üçün ideal akkumulyatoru seçməyə kömək edəcək",
+                    ai_welcome: "Salam! Batareya seçiminizdə sizə necə kömək edə bilərəm?",
+                    ai_placeholder: "Sualınızı verin...",
+                    faq_title: "Tez-tez verilən suallar",
+                    faq_how_to_choose: "Akkumulyatoru necə seçmək olar?",
+                    faq_how_to_choose_desc: "Avtomobilin markasını və modelini, mühərrikin həcmini, sürət qutusunun tipini və regionunuzun iqlim şəraitini nəzərə alın.",
+                    faq_lifespan: "Akkumulyator nə qədər xidmət edir?",
+                    faq_lifespan_desc: "Akkumulyatorun orta ömrü 3-5 ildir, lakin bu, istismar şərtlərindən və doldurulma keyfiyyətindən asılıdır.",
+                    faq_check_status: "Akkumulyatorun vəziyyətini necə yoxlamaq olar?",
+                    faq_check_status_desc: "Gərginliyi ölçmək üçün multimetr istifadə edin. Tam doldurulmuş akkumulyator 12.6-12.7V göstərməlidir.",
+                    faq_winter_prep: "Akkumulyatoru qışa necə hazırlamaq olar?",
+                    faq_winter_prep_desc: "Doldurma səviyyəsini yoxlayın, terminalları təmizləyin, lazım gələrsə akkumulyatoru doldurun və xüsusi örtüklə izolyasiya edin.",
+                    your_cart: "Səbətiniz",
+                    cart_description: "Seçdiyiniz məhsullar",
+                    cart_empty: "Səbətiniz boşdur",
+                    add_from_catalog: "Kataloqdan məhsul əlavə edin",
+                    go_to_catalog: "Kataloqa keç",
+                    items: "Məhsullar:",
+                    delivery: "Çatdırılma:",
+                    total: "Cəmi:",
+                    checkout: "Sifarişi rəsmiləşdir",
+                    shop: "Mağaza",
+                    categories: "Kateqoriyalar",
+                    industrial: "Sənaye",
+                    contacts: "Əlaqə",
+                    address_baku: "Bakı, Neftçilər pr. 123",
+                    phone: "+994 12 345 67 89",
+                    email: "info@batterypro.az",
+                    hours: "B.e.-Ş.: 9:00-19:00",
+                    social_media: "Biz sosial şəbəkələrdə",
+                    facebook: "Facebook",
+                    instagram: "Instagram",
+                    youtube: "YouTube",
+                    whatsapp: "WhatsApp",
+                    copyright: "© 2023 BatteryPro. Bütün hüquqlar qorunur."
+                }
+            };
+
+            let currentLanguage = 'ru';
+
+            function updateLanguage(lang) {
+                currentLanguage = lang;
+                document.querySelectorAll('[data-translate]').forEach(element => {
+                    const key = element.dataset.translate;
+                    if (translations[lang] && translations[lang][key]) {
+                        element.innerHTML = element.innerHTML.includes('<i') ? 
+                            <i class="${element.querySelector('i').className}"></i> ${translations[lang][key]} : 
+                            translations[lang][key];
+                    }
+                });
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.lang === lang);
+                });
+            }
+
+            document.querySelectorAll('.lang-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    updateLanguage(this.dataset.lang);
+                });
+            });
+
+            updateLanguage(currentLanguage);
+
             const pages = {
-                home: document.getElementById('home-page'),
-                products: document.getElementById('products-page'),
-                about: document.getElementById('about-page'),
-                delivery: document.getElementById('delivery-page'),
-                ai: document.getElementById('ai-page'),
-                cart: document.getElementById('cart-page')
+                'home': document.getElementById('home-page'),
+                'products': document.getElementById('products-page'),
+                'about': document.getElementById('about-page'),
+                'delivery': document.getElementById('delivery-page'),
+                'ai': document.getElementById('ai-page'),
+                'cart': document.getElementById('cart-page')
             };
             
-            // Кнопки навигации
             const navLinks = document.querySelectorAll('.nav-link');
             const mobileToggle = document.getElementById('mobileToggle');
             const navMenu = document.getElementById('navMenu');
             const catalogBtn = document.getElementById('catalog-btn');
+            const aiConversation = document.getElementById('ai-conversation');
+            const aiInput = document.getElementById('ai-input');
             
-            // Функция переключения страниц
             function showPage(pageId) {
-                // Скрыть все страницы
-                Object.values(pages).forEach(page => {
-                    page.classList.remove('active');
-                });
+                const currentPage = document.querySelector('.page-content.active');
+                const targetPage = pages[pageId];
                 
-                // Показать выбранную страницу
-                pages[pageId].classList.add('active');
-                
-                // Обновить активную ссылку в навигации
-                navLinks.forEach(link => {
-                    link.classList.remove('active');
-                    if (link.getAttribute('data-page') === pageId) {
-                        link.classList.add('active');
-                    }
-                });
-                
-                // Закрыть мобильное меню
-                navMenu.classList.remove('active');
-                
-                // Прокрутка вверх
-            window.scrollTo(0, 0);
-                
-                // Обновить корзину, если открыта страница корзины
-                if (pageId === 'cart') {
-                    updateCartDisplay();
+                if (currentPage) {
+                    currentPage.classList.add('exiting');
+                    setTimeout(() => {
+                        currentPage.classList.remove('active', 'exiting');
+                        currentPage.style.display = 'none';
+                    }, 400);
                 }
+                
+                targetPage.style.display = 'block';
+                setTimeout(() => {
+                    targetPage.classList.add('active');
+                }, 10);
+                
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('data-page') === pageId);
+                });
+                
+                navMenu.classList.remove('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                if (pageId === 'ai') {
+                    aiConversation.innerHTML = '';
+                    const initialMessage = document.createElement('div');
+                    initialMessage.classList.add('message', 'ai-message');
+                    initialMessage.textContent = translations[currentLanguage]['ai_welcome'];
+                    aiConversation.appendChild(initialMessage);
+                    aiInput.placeholder = translations[currentLanguage]['ai_placeholder'];
+                }
+                
+                if (pageId === 'cart') updateCartDisplay();
             }
             
-            // Обработчики для навигационных ссылок
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const pageId = this.getAttribute('data-page');
-                    showPage(pageId);
+                    showPage(this.getAttribute('data-page'));
                 });
             });
             
-            // Обработчик для кнопки "Смотреть каталог"
             catalogBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 showPage('products');
             });
             
-            // Мобильное меню
             mobileToggle.addEventListener('click', function() {
                 navMenu.classList.toggle('active');
             });
             
-            // Закрытие меню при клике вне его области
             document.addEventListener('click', function(e) {
-                if (!navMenu.contains(e.target) {
+                if (!navMenu.contains(e.target) && !mobileToggle.contains(e.target)) {
                     navMenu.classList.remove('active');
                 }
             });
             
-            // ИИ-ассистент
-            const aiConversation = document.getElementById('ai-conversation');
-            const aiInput = document.getElementById('ai-input');
             const aiSend = document.getElementById('ai-send');
-            const langRu = document.getElementById('lang-ru');
-            const langAz = document.getElementById('lang-az');
-            
-            let currentLang = 'ru';
-            
-            // База знаний для ИИ-ассистента
             const aiResponses = {
                 ru: {
                     "привет": "Здравствуйте! Чем могу помочь с выбором аккумулятора?",
@@ -1820,7 +1971,7 @@
                     "гарантия": "На все аккумуляторы предоставляется гарантия 24 месяца. В случае неисправности вы можете вернуть товар.",
                     "выбор": "Чтобы подобрать аккумулятор, укажите марку, модель и год выпуска вашего автомобиля.",
                     "оплата": "Мы принимаем оплату картами Visa/Mastercard, наличными при получении и банковским переводом.",
-                    "благодарю": "Пожалуйста! Если у вас возникнут дополнительные вопросы, обращайтесь в любое время.",
+                    "благодарю": "Пожалуйста! Если у вас возникнут дополнительные вопросы, обращ- обращайтесь в любое время.",
                     "аккумулятор": "У нас есть широкий выбор аккумуляторов для различных типов транспортных средств. Какой тип вас интересует?",
                     "цена": "Цены на наши аккумуляторы начинаются от 140 ₼. Конкретную стоимость вы можете увидеть в каталоге.",
                     "зима": "Для зимы рекомендую аккумуляторы с увеличенным пусковым током. Например, BLU POLAR L3B75P или PROFI 16 110.",
@@ -1842,181 +1993,82 @@
                 }
             };
             
-            // Переключение языка
-            langRu.addEventListener('click', () => {
-                currentLang = 'ru';
-                langRu.classList.add('active');
-                langAz.classList.remove('active');
-                aiInput.placeholder = "Задайте ваш вопрос...";
-            });
-            
-            langAz.addEventListener('click', () => {
-                currentLang = 'az';
-                langAz.classList.add('active');
-                langRu.classList.remove('active');
-                aiInput.placeholder = "Sualınızı verin...";
-            });
-            
-            // Отправка сообщения
             function sendMessage() {
                 const message = aiInput.value.trim();
                 if (message === '') return;
                 
-                // Добавление сообщения пользователя
                 const userMessage = document.createElement('div');
                 userMessage.classList.add('message', 'user-message');
                 userMessage.textContent = message;
                 aiConversation.appendChild(userMessage);
                 
-                // Очистка поля ввода
                 aiInput.value = '';
-                
-                // Прокрутка вниз
                 aiConversation.scrollTop = aiConversation.scrollHeight;
                 
-                // Имитация ответа ИИ с задержкой
                 setTimeout(() => {
-                    let response = aiResponses[currentLang]['default'];
+                    let response = aiResponses[currentLanguage]['default'];
                     const lowerMessage = message.toLowerCase();
                     
-                    // Поиск подходящего ответа
-                    for (const key in aiResponses[currentLang]) {
+                    for (const key in aiResponses[currentLanguage]) {
                         if (lowerMessage.includes(key)) {
-                            response = aiResponses[currentLang][key];
+                            response = aiResponses[currentLanguage][key];
                             break;
                         }
                     }
                     
-                    // Добавление ответа ИИ
                     const aiMessage = document.createElement('div');
                     aiMessage.classList.add('message', 'ai-message');
                     aiMessage.textContent = response;
                     aiConversation.appendChild(aiMessage);
                     
-                    // Прокрутка вниз
                     aiConversation.scrollTop = aiConversation.scrollHeight;
                 }, 1000);
             }
             
-            // Обработчики событий
             aiSend.addEventListener('click', sendMessage);
-            
             aiInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    sendMessage();
-                }
+                if (e.key === 'Enter') sendMessage();
             });
             
-            // Инициализация приветственных сообщений
-            setTimeout(() => {
-                const welcomeRu = document.createElement('div');
-                welcomeRu.classList.add('message', 'ai-message');
-                welcomeRu.textContent = "Чем могу помочь? Вы можете спросить о доставке, гарантии или помощи в выборе аккумулятора.";
-                aiConversation.appendChild(welcomeRu);
-                
-                const welcomeAz = document.createElement('div');
-                welcomeAz.classList.add('message', 'ai-message');
-                welcomeAz.textContent = "Necə kömək edə bilərəm? Çatdırılma, zəmanət və ya batareya seçimi ilə bağlı sual verə bilərsiniz.";
-                aiConversation.appendChild(welcomeAz);
-                
-                aiConversation.scrollTop = aiConversation.scrollHeight;
-            }, 1500);
-            
-            // Загрузка изображений
             const uploadArea = document.getElementById('uploadArea');
             const fileInput = document.getElementById('fileInput');
             const uploadBtn = document.getElementById('uploadBtn');
             const uploadPreview = document.getElementById('uploadPreview');
             
-            uploadArea.addEventListener('click', () => {
-                fileInput.click();
-            });
-            
-            uploadBtn.addEventListener('click', () => {
-                fileInput.click();
-            });
+            uploadArea.addEventListener('click', () => fileInput.click());
+            uploadBtn.addEventListener('click', () => fileInput.click());
             
             fileInput.addEventListener('change', function() {
                 if (this.files && this.files[0]) {
                     const reader = new FileReader();
-                    
                     reader.onload = function(e) {
                         uploadPreview.src = e.target.result;
                         uploadPreview.style.display = 'block';
                     }
-                    
                     reader.readAsDataURL(this.files[0]);
                     
-                    // Показать сообщение об успешной загрузке
                     setTimeout(() => {
                         const message = document.createElement('div');
                         message.classList.add('message', 'ai-message');
-                        message.textContent = "Фото успешно загружено! Наши специалисты свяжутся с вами в ближайшее время.";
+                        message.textContent = translations[currentLanguage]['upload_success'] || "Фото успешно загружено! Наши специалисты свяжутся с вами в ближайшее время.";
                         aiConversation.appendChild(message);
-                        
-                        // Прокрутка вниз
                         aiConversation.scrollTop = aiConversation.scrollHeight;
                     }, 1000);
                 }
             });
             
-            // Drag and drop для загрузки изображений
-            uploadArea.addEventListener('dragover', (e) => {
-                e.preventDefault();
-                uploadArea.style.borderColor = 'var(--secondary)';
-                uploadArea.style.backgroundColor = '#f0f8ff';
-            });
-            
-            uploadArea.addEventListener('dragleave', () => {
-                uploadArea.style.borderColor = '#ddd';
-                uploadArea.style.backgroundColor = '';
-            });
-            
-            uploadArea.addEventListener('drop', (e) => {
-                e.preventDefault();
-                uploadArea.style.borderColor = '#ddd';
-                uploadArea.style.backgroundColor = '';
-                
-                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                    fileInput.files = e.dataTransfer.files;
-                    
-                    const reader = new FileReader();
-                    
-                    reader.onload = function(e) {
-                        uploadPreview.src = e.target.result;
-                        uploadPreview.style.display = 'block';
-                    }
-                    
-                    reader.readAsDataURL(e.dataTransfer.files[0]);
-                    
-                    // Показать сообщение об успешной загрузке
-                    setTimeout(() => {
-                        const message = document.createElement('div');
-                        message.classList.add('message', 'ai-message');
-                        message.textContent = "Фото успешно загружено! Наши специалисты свяжутся с вами в ближайшее время.";
-                        aiConversation.appendChild(message);
-                        
-                        // Прокрутка вниз
-                        aiConversation.scrollTop = aiConversation.scrollHeight;
-                    }, 1000);
-                }
-            });
-            
-            // Корзина
             const cartItems = document.getElementById('cart-items');
             const cartCount = document.getElementById('cartCount');
             const cartSummary = document.getElementById('cart-summary');
             const addToCartButtons = document.querySelectorAll('.add-to-cart');
             let cart = JSON.parse(localStorage.getItem('cart')) || [];
             
-            // Обновление счетчика корзины
             function updateCartCounter() {
                 const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
                 cartCount.textContent = totalItems;
                 localStorage.setItem('cart', JSON.stringify(cart));
             }
             
-            // Обновление отображения корзины
             function updateCartDisplay() {
                 cartItems.innerHTML = '';
                 
@@ -2024,24 +2076,20 @@
                     cartItems.innerHTML = 
                         <div class="empty-cart">
                             <i class="fas fa-shopping-cart"></i>
-                            <h3>Ваша корзина пуста</h3>
-                            <p>Добавьте товары из каталога</p>
-                            <a href="#" class="btn nav-link" data-page="products" style="margin-top: 20px;">Перейти в каталог</a>
+                            <h3 data-translate="cart_empty">${translations[currentLanguage]['cart_empty']}</h3>
+                            <p data-translate="add_from_catalog">${translations[currentLanguage]['add_from_catalog']}</p>
+                            <a href="#" class="btn nav-link" data-page="products" style="margin-top: 20px;" data-translate="go_to_catalog">${translations[currentLanguage]['go_to_catalog']}</a>
                         </div>
                     ;
                     cartSummary.style.display = 'none';
-                    
-                    // Добавляем обработчик для кнопки в пустой корзине
                     document.querySelector('.nav-link[data-page="products"]').addEventListener('click', function(e) {
                         e.preventDefault();
                         showPage('products');
                     });
-                    
                     return;
                 }
                 
                 cartSummary.style.display = 'block';
-                
                 let subtotal = 0;
                 
                 cart.forEach((item, index) => {
@@ -2050,9 +2098,9 @@
                     
                     const cartItem = document.createElement('div');
                     cartItem.classList.add('cart-item');
-                    cartItem.innerHTML = `
+                    cartItem.innerHTML = 
                         <div class="cart-item-img">
-                            <img src="${item.image}" alt="${item.name}">
+                            <img src="${item.image}" alt="${item.name}" loading="lazy">
                         </div>
                         <div class="cart-item-details">
                             <h4 class="cart-item-name">${item.name}</h4>
@@ -2067,12 +2115,11 @@
                             <button class="remove-btn" data-index="${index}">
                                 <i class="fas fa-trash"></i>
                             </button>
-                            </div>
+                        </div>
                     ;
                     cartItems.appendChild(cartItem);
                 });
                 
-                // Расчет стоимости
                 const delivery = subtotal > 100 ? 0 : 5;
                 const total = subtotal + delivery;
                 
@@ -2080,15 +2127,11 @@
                 document.getElementById('delivery').textContent = delivery.toFixed(2) + ' ₼';
                 document.getElementById('total').textContent = total.toFixed(2) + ' ₼';
                 
-                // Обработчики для кнопок в корзине
                 document.querySelectorAll('.decrease').forEach(button => {
                     button.addEventListener('click', function() {
                         const index = parseInt(this.dataset.index);
-                        if (cart[index].quantity > 1) {
-                            cart[index].quantity--;
-                        } else {
-                            cart.splice(index, 1);
-                        }
+                        if (cart[index].quantity > 1) cart[index].quantity--;
+                        else cart.splice(index, 1);
                         updateCartDisplay();
                         updateCartCounter();
                     });
@@ -2113,7 +2156,6 @@
                 });
             }
             
-            // Добавление товара в корзину
             addToCartButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const productCard = this.closest('.product-card');
@@ -2122,64 +2164,38 @@
                     const productPrice = parseFloat(productCard.querySelector('.product-price').textContent);
                     const productImage = productCard.querySelector('.product-img img').src;
                     
-                    // Проверяем, есть ли товар уже в корзине
                     const existingItem = cart.find(item => item.id === productId);
+                    if (existingItem) existingItem.quantity++;
+                    else cart.push({ id: productId, name: productName, price: productPrice, image: productImage, quantity: 1 });
                     
-                    if (existingItem) {
-                        existingItem.quantity++;
-                    } else {
-                        cart.push({
-                            id: productId,
-                            name: productName,
-                            price: productPrice,
-                            image: productImage,
-                            quantity: 1
-                        });
-                    }
-                    
-                    // Обновляем корзину
                     updateCartCounter();
                     
-                    // Показываем уведомление
                     const notification = document.createElement('div');
-                    notification.classList.add('notification');
                     notification.innerHTML = 
                         <div style="position: fixed; top: 20px; right: 20px; background: #4CAF50; color: white; padding: 15px; border-radius: 5px; z-index: 1000;">
-                            <i class="fas fa-check-circle"></i> Товар добавлен в корзину!
-                            </div>
-                    `;
+                            <i class="fas fa-check-circle"></i> ${translations[currentLanguage]['add_to_cart_success'] || 'Товар добавлен в корзину!'}
+                        </div>
+                    ;
                     document.body.appendChild(notification);
-                    
-                    setTimeout(() => {
-                        notification.remove();
-                    }, 3000);
+                    setTimeout(() => notification.remove(), 3000);
                 });
             });
             
-            // Фильтрация по категориям
             const categoryButtons = document.querySelectorAll('.category-btn');
             const productCards = document.querySelectorAll('.product-card');
             
             categoryButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const category = this.dataset.category;
-                    
-                    // Обновляем активную кнопку
                     categoryButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                     
-                    // Фильтруем товары
                     productCards.forEach(card => {
-                        if (category === 'all' || card.dataset.category === category) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
+                        card.style.display = (category === 'all' || card.dataset.category === category) ? 'block' : 'none';
                     });
                 });
             });
             
-            // Инициализация корзины
             updateCartCounter();
             updateCartDisplay();
         });
